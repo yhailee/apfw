@@ -7,7 +7,7 @@ Generate project Usage:
 [Second way]
 1. Create PROJECT-PATH/index.php, and put the below script in it
    <?php
-   define('SYS_ROOT', realpath(FRAMEWORK-PATH) . '/');
+   define('SYS_ROOT', realpath('FRAMEWORK-PATH') . '/');
    require SYS_ROOT . 'framework.php';
    ?>
 2. Replace FRAMEWORK-PATH to this package path
