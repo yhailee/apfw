@@ -23,8 +23,8 @@ class builder {
     }
 
     cp(SYS_ROOT . 'prefiles', $appPath, $isDev ? 0777 : 0755);
-    
-    $index = $appPath. '/index.php';
+
+    $index = $appPath . '/index.php';
     file_put_contents($index, sprintf(file_get_contents($index), SYS_ROOT));
 
     return TRUE;
