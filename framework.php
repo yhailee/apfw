@@ -29,7 +29,7 @@ require SYS_ROOT . 'function.func.php';
 /**
  * Configure
  */
-if (!file_exists('config.inc.php'))
+if (!file_exists('lib/config.inc.php'))
   (require SYS_ROOT . 'local/builder.class.php') && builder::app();
 
 $config = (array) require 'lib/config.inc.php';

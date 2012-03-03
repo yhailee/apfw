@@ -195,7 +195,7 @@ function outputJSON($status, $msg = '', $data = array()) {
  * @return boolean
  */
 function makeDir($dir, $mode = 0755) {
-  return empty($dir) || is_dir($dir) || makeDir(dirname($dir), $mode) && mkdir($dir) && chmod($dir, $mode);
+  return empty($dir) || is_dir($dir) || makeDir(dirname($dir), $mode) && mkdir($dir, $mode);
 }
 
 /**

@@ -94,7 +94,7 @@ class model {
    * @param string $order
    * @return array
    */
-  public function get($condition = NULL, $limit = NULL, $order = NULL) {
+  public function getList($condition = NULL, $limit = NULL, $order = NULL) {
     $tables = array($this->_model);
     $where = array();
     if (is_array($condition) && count($condition) > 0) {
@@ -295,20 +295,20 @@ class model {
    * @param mixed $condition, string/array
    * @return boolean
    */
-  public function del($ids = NULL) {
+  public function delete($ids = NULL) {
     $where = '';
     if (is_array($ids) && count($ids) > 0)
-      $where = $this->_maps['id']. ' IN ("'.implode('","',$ids).'")';
+      $where = $this->_maps['id'] . ' IN ("' . implode('","', $ids) . '")';
 
     $tables = array();
     foreach ($this->_maps as $m) {
-      $table = substr($m, 0, strpos($m, '.')+1);
+      $table = substr($m, 0, strpos($m, '.') + 1);
       if (!in_array($table, $tables))
-              $tables[] = $table;
+        $tables[] = $table;
     }
 
     foreach ($tables as $t)
-      self::$db->execute('DELETE FROM @__'. $t. ' WHERE '. $where);
+      self::$db->execute('DELETE FROM @__' . $t . ' WHERE ' . $where);
 
     return TRUE;
   }

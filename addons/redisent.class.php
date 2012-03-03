@@ -6,17 +6,8 @@
  * @copyright 2009 Justin Poliey <jdp34@njit.edu>
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  * @package Redisent
+ * @Modified by Andrew li on 12-2-28 下午4:56
  */
-define('CRLF', sprintf('%s%s', chr(13), chr(10)));
-
-if (!function_exists('__redis_call_array_map__')) {
-
-  function __redis_call_array_map__($arg) {
-    $arg = trim($arg);
-    return sprintf('$%d%s%s', strlen($arg), CRLF, $arg);
-  }
-
-}
 
 /**
  * Wraps native Redis errors in friendlier PHP exceptions
@@ -36,6 +27,13 @@ class Redis {
    * @access private
    */
   private $__sock;
+
+  /**
+   * Data format separator
+   * @var string
+   * @access private
+   */
+  private $_crlf;
 
   /**
    * Host of the Redis server
@@ -59,7 +57,7 @@ class Redis {
    * @modified by Andrew for moving fundation to connect
    */
   function __construct() {
-
+    $this->_crlf = sprintf('%s%s', chr(13), chr(10));
   }
 
   function __destruct() {
@@ -70,7 +68,40 @@ class Redis {
 
     /* Build the Redis unified protocol command */
     array_unshift($args, strtoupper($name));
-    $command = sprintf('*%d%s%s%s', count($args), CRLF, implode(array_map('__redis_call_array_map__', $args), CRLF), CRLF);
+    $result = NULL;
+    if (isset($args[2]) && is_array($args[2])) {
+      $sourceArgs = $args;
+      $result = array();
+      foreach ($sourceArgs[2] as $subArg) {
+        $args = array(
+            $sourceArgs[0],
+            $sourceArgs[1],
+            $subArg
+        );
+        $result[$subArg] = $this->_do($args);
+      }
+    } else {
+      $result = $this->_do($args);
+    }
+    return $result;
+  }
+
+  public function connect($host, $port = 6379, $timeout = 1) {
+    $this->host = $host;
+    $this->port = $port;
+    $this->__sock = fsockopen($this->host, $this->port, $errno, $errstr, $timeout);
+    if (!$this->__sock) {
+      throw new Exception("{$errno} - {$errstr}");
+    }
+  }
+
+  private function _format($arg) {
+    $arg = trim($arg);
+    return sprintf('$%d%s%s', strlen($arg), $this->_crlf, $arg);
+  }
+
+  private function _do($args) {
+    $command = sprintf('*%d%s%s%s', count($args), $this->_crlf, implode(array_map(array($this, '_format'), $args), $this->_crlf), $this->_crlf);
 
     /* Open a Redis connection and execute the command */
     for ($written = 0; $written < strlen($command); $written += $fwrite) {
@@ -143,15 +174,6 @@ class Redis {
     }
     /* Party on */
     return $response;
-  }
-
-  public function connect($host, $port = 6379, $timeout = 1) {
-    $this->host = $host;
-    $this->port = $port;
-    $this->__sock = fsockopen($this->host, $this->port, $errno, $errstr, $timeout);
-    if (!$this->__sock) {
-      throw new Exception("{$errno} - {$errstr}");
-    }
   }
 
 }
