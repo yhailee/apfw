@@ -70,7 +70,7 @@ class action {
       $tmp = array_map('trim', explode('.', $tpl));
       $count = count($tmp);
       if ($count === 0)
-        ;
+        $tpl = MODULE . '/' . ACTION . '/' . METHOD;
       elseif ($count === 1)
         $tpl = MODULE . '/' . ACTION . '/' . $tmp[0];
       elseif ($count === 2)
