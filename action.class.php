@@ -45,7 +45,7 @@ class action {
    * @param mixed $value
    * @return void
    */
-  public final function assign($key, $value) {
+  protected final function assign($key, $value) {
     $key = (string) $key;
     $key = trim($key);
 
@@ -58,12 +58,12 @@ class action {
   /**
    * Fetch out put
    *
-   * @access public
+   * @access protected
    * @param string $tpl
    * @return void
    * @output mixed
    */
-  public final function fetch($tpl = NULL) {
+  protected final function fetch($tpl = NULL) {
     if (!$tpl)
       $tpl = MODULE . '/' . ACTION . '/' . METHOD;
     else {
@@ -86,12 +86,12 @@ class action {
   /**
    * Display out put
    *
-   * @access public
+   * @access protected
    * @param string $tpl
    * @return void
    * @output mixed
    */
-  public final function display($tpl = NULL) {
+  protected final function display($tpl = NULL) {
     die($this->fetch($tpl));
   }
 
