@@ -21,296 +21,327 @@ defined('SYS_ROOT') || die('Access denied !');
  */
 class model {
 
-  /**
-   * Model name
-   */
-  private $_model = NULL;
+	/**
+	 * Model name
+	 */
+	private $_model = NULL;
 
-  /**
-   * Default limit
-   */
-  private $_limit = '0, 15';
+	/**
+	 * Default limit
+	 */
+	private $_limit = '0, 15';
 
-  /**
-   * Maps
-   */
-  private $_maps = NULL;
+	/**
+	 * Maps
+	 */
+	private $_maps = NULL;
 
-  /**
-   * DB object
-   */
-  private static $db = NULL;
+	/**
+	 * DB object
+	 */
+	private static $db = NULL;
 
-  /**
-   * Construct
-   *
-   * @access public
-   * @param string $name
-   * @return void
-   */
-  public function __construct($name = NULL, $options = array()) {
-    if (empty($name))
-      return FALSE;
+	/**
+	 * Construct
+	 *
+	 * @access public
+	 * @param string $name
+	 * @return void
+	 */
+	public function __construct($name = NULL, $options = array()) {
+		if (empty($name))
+			return FALSE;
 
-    if (!file_exists('models/' . $name . '.inc.php'))
-      return FALSE;
+		if (!file_exists('models/' . $name . '.php'))
+			return FALSE;
 
-    $this->_model = $name;
+		$this->_model = $name;
 
-    $this->_maps = require 'models/' . $name . '.inc.php';
+		$this->_maps = require 'models/' . $name . '.php';
 
-    if (is_array($options) && count($options) > 0)
-      foreach ($options as $k => $v)
-        if (isset($this->{'_' . $k}))
-          $this->{'_' . $k} = $v;
+		if (is_array($options) && count($options) > 0)
+			foreach ($options as $k => $v)
+				if (isset($this->{'_' . $k}))
+					$this->{'_' . $k} = $v;
 
-    if (NULL === self::$db)
-      self::$db = new db($GLOBALS['config']['database']);
-  }
+		if (NULL === self::$db) {
+			require_once SYS_ROOT . 'local/db.class.php';
+			self::$db = new db($GLOBALS['config']['database']);
+		}
+	}
 
-  /**
-   * __call
-   *
-   * @access public
-   * @param string $name
-   * @param array $arguments
-   * @return mixed
-   */
-  public function __call($name, $arguments) {
-    if (strlen($name) > 3 && (0 === strpos($name, 'set') || 0 === strpos($name, 'get'))) {
-      $action = substr($name, 0, 3);
-      $id = $arguments[0];
-      $attr = substr($name, 3);
-      return $this->{$action . 'Attr'}($id, $attr);
-    }
-  }
+	/**
+	 * __call
+	 *
+	 * @access public
+	 * @param string $name
+	 * @param array $arguments
+	 * @return mixed
+	 */
+	public function __call($name, $arguments) {
+		if (strlen($name) > 3 && (0 === strpos($name, 'set') || 0 === strpos($name, 'get'))) {
+			$action = substr($name, 0, 3);
+			$id = $arguments[0];
+			$attr = strtolower(substr($name, 3));
+			return call_user_func_array(array($this, $action . 'Attr'), array($id, $action == 'set' ? array($attr => $arguments[1]) : $attr));
+		}
+	}
 
-  /**
-   * Get list
-   *
-   * @access public
-   * @param mixed $condition
-   * @param mixed $limit
-   * @param string $order
-   * @return array
-   */
-  public function getList($condition = NULL, $limit = NULL, $order = NULL) {
-    $tables = array($this->_model);
-    $where = array();
-    if (is_array($condition) && count($condition) > 0) {
-      $data = array();
-      foreach ($condition as $k => $c)
-        if (isset($this->_maps[$k])) {
-          $data[$this->_maps[$k]] = $c;
-          $where[] = '@__' . $this->_maps[$k] . '=":' . $this->_maps[$k] . '"';
-          $table = substr($this->_maps[$k], 0, strpos($this->_maps[$k], '.') + 1);
-          if (!in_array($table, $tables))
-            $tables[] = $table;
-        }
-    }
+	/**
+	 * Get list
+	 *
+	 * @access public
+	 * @param mixed $condition, array('field1'=>'value1', 'field2'=>'~~%value2%', 'field3'=>'ISNULL', 'field4'=>'SETNULL'),
+	 * @param mixed $limit
+	 * @param string $order
+	 * @return array
+	 */
+	public function getList($condition = NULL, $limit = NULL, $order = NULL) {
+		$tables = array($this->_model);
+		$where = array();
+		if (is_array($condition) && count($condition) > 0) {
+			$data = array();
+			foreach ($condition as $k => $c)
+				if (isset($this->_maps[$k])) {
+					$data[$this->_maps[$k]] = $c;
+					if (0 === strpos($c, '~~')) {
+						$where[] = '@__' . $this->_maps[$k] . ' LIKE ":' . $this->_maps[$k] . '"';
+						$data[$this->_maps[$k]] = substr($c, 2);
+					} elseif (0 === strcasecmp($c, 'ISNULL'))
+						$where[] = '@__' . $this->_maps[$k] . ' IS :' . $this->_maps[$k];
+					elseif (0 === strcasecmp($c, 'SETNULL'))
+						$where[] = '@__' . $this->_maps[$k] . '=:' . $this->_maps[$k];
+					else
+					  $where[] = '@__' . $this->_maps[$k] . '=":' . $this->_maps[$k] . '"';
+					$table = substr($this->_maps[$k], 0, strpos($this->_maps[$k], '.'));
+					if (!in_array($table, $tables))
+						$tables[] = $table;
+				}
+		}
 
-    if (NULL !== $limit) {
-      if (is_string($limit)) {
-        $limit = 'LIMIT ' . $limit;
-      } elseif (is_array($limit) && 2 === count($limit)) {
-        $limit = 'LIMIT ' . implode(', ', $limit);
-      } else {
-        $limit = $this->_limit;
-      }
-    } else {
-      $limit = $this->_limit;
-    }
+		if (NULL !== $limit) {
+			if (is_string($limit)) {
+				$limit = 'LIMIT ' . $limit;
+			} elseif (is_array($limit) && 2 === count($limit)) {
+				$limit = 'LIMIT ' . implode(', ', $limit);
+			} else {
+				$limit = $this->_limit;
+			}
+		} else {
+			$limit = $this->_limit;
+		}
 
-    if (NULL !== $order && is_string($order)) {
-      if (FALSE === stripos($order, 'RAND()')) {
-        $orders = explode(',', $order);
-        $order = '';
-        foreach ($orders as $o)
-          if (isset($this->_maps[$o])) {
-            $order[] = '@__' . $this->_maps[$o];
-            $table = substr($this->_maps[$o], 0, strpos($this->_maps[$o], '.') + 1);
-            if (!in_array($table, $tables))
-              $tables[] = $table;
-          }
+		if (NULL !== $order && is_string($order)) {
+			if (FALSE === stripos($order, 'RAND()')) {
+				$orders = explode(',', $order);
+				$order = '';
+				foreach ($orders as $o)
+					if (isset($this->_maps[$o])) {
+						$order[] = '@__' . $this->_maps[$o];
+						$table = substr($this->_maps[$o], 0, strpos($this->_maps[$o], '.'));
+						if (!in_array($table, $tables))
+							$tables[] = $table;
+					}
 
-        $order = implode(',', $order);
-      }
-      if ($order)
-        $order = 'ORDER BY ' . $order;
-    } else {
-      $order = '';
-    }
+				$order = implode(',', $order);
+			}
+			if ($order)
+				$order = 'ORDER BY ' . $order;
+		} else {
+			$order = '';
+		}
 
-    foreach ($tables as $k => $t) {
-      $tables[$k] = '@__' . $t;
-      if ($t != $this->_model)
-        $where[] = '@__' . $tables[$k] . '.' . $this->_maps['id'] . '=@__' . $this->_model . '.' . $this->_maps['id'];
-    }
+		foreach ($tables as $k => $t) {
+			$tables[$k] = '@__' . $t;
+			if ($t != $this->_model)
+				$where[] = $tables[$k] . '.' . $this->_maps['id'] . '=@__' . $this->_model . '.' . $this->_maps['id'];
+		}
 
-    // build query
-    $query = 'SELECT @__' . $this->_model . '.' . $this->_maps['id'] . ' FROM ' . implode(',', $tables) . " $where $order $limit";
+		if (count($where) > 0)
+			$where = ' WHERE '. implode(' AND ', $where);
+		else
+			$where = '';
 
-    return self::$db->rows($query, $data);
-  }
+		if ($order)
+			$order = ' ORDER '. $order;
 
-  /**
-   * Add data
-   *
-   * @access public
-   * @param array $data
-   * @return mixed
-   */
-  public function add($data = array()) {
-    if (!is_array($data) || count($data) < 1)
-      return FALSE;
+		if ($limit)
+			$limit = ' LIMIT '. $limit;
 
-    $tables = array();
-    foreach ($data as $k => $v) {
-      if (isset($this->_maps[$k])) {
-        $table = substr($this->_maps[$k], 0, strpos($this->_maps[$k], '.') + 1);
-        $tables[$table][$this->_maps[$k]] = $v;
-      }
-    }
+		// build query
+		$query = 'SELECT @__' . $this->_model . '.' . $this->_maps['id'] . ' FROM ' . implode(',', $tables) .$where.  $order. $limit;
+		return self::$db->rows($query, $data);
+	}
 
-    if (!array_key_exists($this->_model, $tables))
-      return FALSE;
+	/**
+	 * Add data
+	 *
+	 * @access public
+	 * @param array $data
+	 * @return mixed
+	 */
+	public function add($data = array()) {
+		if (!is_array($data) || count($data) < 1)
+			return FALSE;
 
-    // primary table
-    $query = array();
-    $data = array();
-    foreach ($tables[$this->_model] as $k => $v) {
-      $query[] = '@__' . $k . '=":' . $k . '"';
-      $data[$k] = $v;
-    }
-    $query = 'INSERT INTO @__' . $this->_model . ' SET ' . implode(',', $query);
-    $id = self::$db->insert($query, $data);
+		$tables = array();
+		foreach ($data as $k => $v) {
+			if (isset($this->_maps[$k])) {
+				$table = substr($this->_maps[$k], 0, strpos($this->_maps[$k], '.'));
+				$tables[$table][$this->_maps[$k]] = $v;
+			}
+		}
 
-    if (!$id)
-      return FALSE;
+		if (!array_key_exists($this->_model, $tables))
+			return FALSE;
 
-    // slave tables
-    unset($tables[$this->_model]);
-    foreach ($tables as $t => $table) {
-      $query = array('@__' . $this->_maps['id'] . '=":id"');
-      $data = array('id' => $id);
-      foreach ($table as $k => $v) {
-        $query[] = '@__' . $k . '=":' . $k . '"';
-        $data[$k] = $v;
-      }
-      $query = 'INSERT INTO @__' . $t . ' SET ' . implode(',', $query);
-      self::$db->insert($query, $data);
-    }
-    return $id;
-  }
+		// primary table
+		$query = array();
+		$data = array();
+		foreach ($tables[$this->_model] as $k => $v) {
+			$query[] = '@__' . $k . '=":' . $k . '"';
+			$data[$k] = $v;
+		}
+		$query = 'INSERT INTO @__' . $this->_model . ' SET ' . implode(',', $query);
+		$id = self::$db->insert($query, $data);
 
-  /**
-   * Get attribute(s)
-   *
-   * @param mixed $id
-   * @param mixed $attrs
-   * @return mixed
-   */
-  public function getAttr($id, $attrs = array()) {
-    if (empty($id))
-      return NULL;
+		if (!$id)
+			return FALSE;
 
-    if (is_string($attrs)) {
-      if (empty($attrs))
-        return NULL;
-      $attrs = explode(',', $attrs);
+		// slave tables
+		unset($tables[$this->_model]);
+		foreach ($tables as $t => $table) {
+			$query = array('@__' . $this->_maps['id'] . '=":id"');
+			$data = array('id' => $id);
+			foreach ($table as $k => $v) {
+				$query[] = '@__' . $k . '=":' . $k . '"';
+				$data[$k] = $v;
+			}
+			$query = 'INSERT INTO @__' . $t . ' SET ' . implode(',', $query);
+			self::$db->insert($query, $data);
+		}
+		return $id;
+	}
 
-      if (count($attrs) > 1)
-        $isSingle = FALSE;
-    } else {
-      $isSingle = TRUE;
-    }
+	/**
+	 * Get attribute(s)
+	 *
+	 * @param mixed $id
+	 * @param mixed $attrs
+	 * @return mixed
+	 */
+	public function getAttr($id, $attrs = array()) {
+		if (empty($id))
+			return NULL;
 
-    if (!is_array($attrs) || count($attrs) < 1)
-      return NULL;
+		$isSingle = TRUE;
 
-    $fields = array_keys($attrs);
-    foreach ($fields as $f)
-      if (!isset($this->_maps[$f]))
-        return NULL;
+		if (is_string($attrs)) {
+			if (empty($attrs))
+				return NULL;
+			$attrs = explode(',', $attrs);
 
-    $tables = array();
-    $fields = array();
-    $where = array();
-    $data = array('id' => $id);
-    foreach ($attrs as $a) {
-      $fields[] = '@__' . $a;
-      $table = '@__' . substr($a, 0, strpos($a, '.') + 1);
-      if (!in_array($a, $fields)) {
-        $tables[] = $table;
-        $where[$table . '.' . $this->_maps['id']] = '":id"';
-      }
-    }
+			if (count($attrs) > 1)
+				$isSingle = FALSE;
+		} elseif (is_array($attrs)) {
+			if (count($attrs) > 1)
+				$isSingle = FALSE;
+		} else {
+			return NULL;
+		}
 
-    $query = 'SELECT ' . implode(',', $fields) . ' FROM ' . implode(',', $tables) . ' WHERE ' . implode(' AND ', $where);
-    return $isSingle ? self::$db->field($query, $data) : self::$db->row($query, $data);
-  }
+		if (!is_array($attrs) || count($attrs) < 1)
+			return NULL;
 
-  /**
-   * Set attribute(s)
-   *
-   * @param mixed $id
-   * @param array $attrs
-   * @return boolean
-   */
-  public function setAttr($id, $attrs = array()) {
-    if (empty($id))
-      return FALSE;
+		foreach ($attrs as $f)
+			if (!isset($this->_maps[$f]))
+				return NULL;
 
-    if (!is_array($attrs) || count($attrs) < 1)
-      return FALSE;
+		$tables = array();
+		$fields = array();
+		$where = array();
+		$data = array('id' => $id);
+		foreach ($attrs as $a) {
+			$fields[] = '@__' . $this->_maps[$a];
+			$table = '@__' . substr($this->_maps[$a], 0, strpos($this->_maps[$a], '.'));
+			if (!in_array($a, $fields)) {
+				$tables[] = $table;
+				$where[] = $table . '.' . $this->_maps['id'] . '=":id"';
+			}
+		}
+		$tables = array_unique($tables);
+		$where = array_unique($where);
+		$query = 'SELECT ' . implode(',', $fields) . ' FROM ' . implode(',', $tables) . ' WHERE ' . implode(' AND ', $where);
+		return $isSingle ? self::$db->field($query, $data) : self::$db->row($query, $data);
+	}
 
-    $fields = array_keys($attrs);
-    foreach ($fields as $f)
-      if (!isset($this->_maps[$f]))
-        return FALSE;
+	/**
+	 * Set attribute(s)
+	 *
+	 * @param mixed $id
+	 * @param array $attrs
+	 * @return boolean
+	 */
+	public function setAttr($id, $attrs = array()) {
+		if (empty($id))
+			return FALSE;
 
-    $tables = array();
-    $fields = array();
-    $data = array('id' => $id);
-    foreach ($attrs as $k => $a) {
-      $table = '@__' . substr($a, 0, strpos($a, '.') + 1);
-      $fields[$table][] = '@__' . $k . '=:"' . $k . '"';
-      $data[$table][$k] = $a;
-      if (!in_array($a, $fields)) {
-        $tables[] = $table;
-      }
-    }
+		if (!is_array($attrs) || count($attrs) < 1)
+			return FALSE;
 
-    foreach ($tables as $table) {
-      $query = 'UPDATE ' . $table . ' SET ' . implode(',', $fields[$table]) . ' WHERE ' . $table . $this->_maps['id'] . '=":id"';
-      self::$db->execute($query, $data[$table]);
-    }
+		$fields = array_keys($attrs);
+		foreach ($fields as $f)
+			if (!isset($this->_maps[$f]))
+				return FALSE;
 
-    return TRUE;
-  }
+		$tables = array();
+		$fields = array();
+		//$data = array('id' => $id);
+		$data = array();
+		foreach ($attrs as $k => $a) {
+			$table = '@__' . substr($this->_maps[$k], 0, strpos($this->_maps[$k], '.'));
+			$fields[$table][] = '@__' . $this->_maps[$k] . '=":' . $k . '"';
+			$data[$table][$k] = $a;
+			if (!in_array($a, $fields)) {
+				$tables[] = $table;
+			}
+		}
 
-  /**
-   * Delete
-   *
-   * @param mixed $condition, string/array
-   * @return boolean
-   */
-  public function delete($ids = NULL) {
-    $where = '';
-    if (is_array($ids) && count($ids) > 0)
-      $where = $this->_maps['id'] . ' IN ("' . implode('","', $ids) . '")';
+		foreach ($tables as $table) {
+			$data[$table]['id'] = $id;
+			$query = 'UPDATE ' . $table . ' SET ' . implode(',', $fields[$table]) . ' WHERE ' . $table . '.' . $this->_maps['id'] . '=":id"';
+			self::$db->execute($query, $data[$table]);
+		}
 
-    $tables = array();
-    foreach ($this->_maps as $m) {
-      $table = substr($m, 0, strpos($m, '.') + 1);
-      if (!in_array($table, $tables))
-        $tables[] = $table;
-    }
+		return TRUE;
+	}
 
-    foreach ($tables as $t)
-      self::$db->execute('DELETE FROM @__' . $t . ' WHERE ' . $where);
+	/**
+	 * Delete
+	 *
+	 * @param mixed $condition, string/array
+	 * @return boolean
+	 */
+	public function del($ids = NULL) {
+		$where = '';
+		if (!is_array($ids)) {
+			$ids = trim($ids);
+			$ids = explode(',', $ids);
+		}
+		if (is_array($ids) && count($ids) > 0)
+			$where = $this->_maps['id'] . ' IN ("' . implode('","', $ids) . '")';
 
-    return TRUE;
-  }
+		$tables = array();
+		foreach ($this->_maps as $m) {
+			$table = substr($m, 0, strpos($m, '.'));
+			if (!in_array($table, $tables))
+				$tables[] = $table;
+		}
+
+		foreach ($tables as $t)
+			self::$db->execute('DELETE FROM @__' . $t . ' WHERE ' . $where);
+
+		return TRUE;
+	}
 
 }

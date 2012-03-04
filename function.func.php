@@ -47,11 +47,7 @@ function model($name = NULL) {
   if (isset($models[$name]))
     return $models[$name];
 
-  $path = 'models/' . $name . '.php';
-  if (file_exists($path) && is_readable($path)) {
-    return ($models[$name] = new model(require $path));
-  } else
-    return NULL;
+  return ($models[$name] = new model($name));
 }
 
 /**

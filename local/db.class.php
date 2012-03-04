@@ -5,12 +5,14 @@
  *
  * @author Andrew li<1024(at)w(dot)cn>
  * @since 16:19 02/20/2012, drop pdo methods
+ * @todo fixed all return types
  */
 class db {
 
   /**
    * DB connect configures
    *
+   * @var array
    * @access public
    */
   public $default = array();
@@ -20,6 +22,7 @@ class db {
   /**
    * Connection type
    *
+   * @var boolean
    * @access public
    */
   public $separate = FALSE;
@@ -27,6 +30,7 @@ class db {
   /**
    * Result
    *
+   * @var mixed
    * @access public
    */
   public $result = NULL;
@@ -34,13 +38,15 @@ class db {
   /**
    * Logs
    *
+   * @var array
    * @access public
    */
-  public $logs = NULL;
+  public $logs = array();
 
   /**
    * Connections
    *
+   * @var object
    * @access private
    */
   private $_default = NULL;
@@ -50,6 +56,7 @@ class db {
   /**
    * Current connect
    *
+   * @var string
    * @access private
    */
   private $_currentConnect = 'default';
@@ -57,6 +64,7 @@ class db {
   /**
    * Table prefix
    *
+   * @var string
    * @access private
    */
   private $_prefix = NULL;
@@ -64,9 +72,18 @@ class db {
   /**
    * Execute result
    *
+   * @var mixed
    * @access private
    */
   private $_executeResult = FALSE;
+
+  /**
+   * Action
+   *
+   * @var string
+   * @access private
+   */
+  private $_action = NULL;
 
   /**
    * Consturctor
@@ -182,7 +199,7 @@ class db {
       return FALSE;
 
     if ($this->separate)
-      switch ($operation = strtoupper(substr($query, 0, strpos($query, ' ')))) {
+      switch ($this->_action = strtoupper(substr($query, 0, strpos($query, ' ')))) {
         case 'INSERT':
         case 'UPDATE':
         case 'DELETE':
@@ -200,7 +217,6 @@ class db {
       return FALSE;
 
     $this->_executeResult = mysql_query($this->_parseQuery($query, $data), $this->_{$this->_currentConnect});
-
     return $this->_executeResult ? TRUE : FALSE;
   }
 
@@ -274,6 +290,7 @@ class db {
    * @access private
    * @param string $query
    * @param array $data
+   * @return string
    */
   private function _parseQuery($query, $data) {
     $arr = array_keys($data);
