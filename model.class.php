@@ -23,21 +23,33 @@ class model {
 
 	/**
 	 * Model name
+	 *
+	 * @var string
+	 * @access private
 	 */
 	private $_model = NULL;
 
 	/**
 	 * Default limit
+	 *
+	 * @var string
+	 * @access private
 	 */
 	private $_limit = '0, 15';
 
 	/**
 	 * Maps
+	 *
+	 * @var array
+	 * @access private
 	 */
-	private $_maps = NULL;
+	private $_maps = array();
 
 	/**
 	 * DB object
+	 *
+	 * @var object
+	 * @access private
 	 */
 	private static $db = NULL;
 
@@ -120,14 +132,14 @@ class model {
 						// ISIN1,2,3,4,5 => IN (1,2,3,4,5)
 						$where[] = '@__' . $this->_maps[$k] . ' IN (:' . $this->_maps[$k] . ')';
 						$data[$this->_maps[$k]] = substr($c, 4);
-					}  elseif (0 === strcasecmp($c, 'ISNULL'))
-						// ISNULL => IS NULL
+					} elseif (0 === strcasecmp($c, 'ISNULL'))
+					// ISNULL => IS NULL
 						$where[] = '@__' . $this->_maps[$k] . ' IS :' . $this->_maps[$k];
 					elseif (0 === strcasecmp($c, 'SETNULL'))
-						// SETNULL => = NULL
+					// SETNULL => = NULL
 						$where[] = '@__' . $this->_maps[$k] . '=:' . $this->_maps[$k];
 					else
-					  $where[] = '@__' . $this->_maps[$k] . '=":' . $this->_maps[$k] . '"';
+						$where[] = '@__' . $this->_maps[$k] . '=":' . $this->_maps[$k] . '"';
 					$table = substr($this->_maps[$k], 0, strpos($this->_maps[$k], '.'));
 					if (!in_array($table, $tables))
 						$tables[] = $table;
@@ -173,18 +185,18 @@ class model {
 		}
 
 		if (count($where) > 0)
-			$where = ' WHERE '. implode(' AND ', $where);
+			$where = ' WHERE ' . implode(' AND ', $where);
 		else
 			$where = '';
 
 		if ($order)
-			$order = ' ORDER '. $order;
+			$order = ' ORDER ' . $order;
 
 		if ($limit)
-			$limit = ' LIMIT '. $limit;
+			$limit = ' LIMIT ' . $limit;
 
 		// build query
-		$query = 'SELECT @__' . $this->_model . '.' . $this->_maps['id'] . ' FROM ' . implode(',', $tables) .$where.  $order. $limit;
+		$query = 'SELECT @__' . $this->_model . '.' . $this->_maps['id'] . ' FROM ' . implode(',', $tables) . $where . $order . $limit;
 		return self::$db->rows($query, $data);
 	}
 

@@ -10,89 +10,89 @@ defined('SYS_ROOT') || die('Access denied !');
 
 class action {
 
-  protected $_config = NULL;
-  protected $_tplvars = array();
+	protected $_config = NULL;
+	protected $_tplvars = array();
 
-  /**
-   * __call
-   *
-   * @access public
-   * @param $method
-   * @param $params
-   * @return void
-   */
-  public function __call($method, $params = NULL) {
-    die('Invalid method !');
-  }
+	/**
+	 * __call
+	 *
+	 * @access public
+	 * @param $method
+	 * @param $params
+	 * @return void
+	 */
+	public function __call($method, $params = NULL) {
+		die('Invalid method !');
+	}
 
-  /**
-   * Run
-   *
-   * @access public
-   * @return void
-   * @output mixed
-   */
-  public function run() {
-    $this->_config = $GLOBALS['config'];
-    call_user_func(array($this, METHOD));
-  }
+	/**
+	 * Run
+	 *
+	 * @access public
+	 * @return void
+	 * @output mixed
+	 */
+	public function run() {
+		$this->_config = $GLOBALS['config'];
+		call_user_func(array($this, METHOD));
+	}
 
-  /**
-   * Set template var
-   *
-   * @access protected
-   * @param string $key
-   * @param mixed $value
-   * @return void
-   */
-  protected final function assign($key, $value) {
-    $key = (string) $key;
-    $key = trim($key);
+	/**
+	 * Set template var
+	 *
+	 * @access protected
+	 * @param string $key
+	 * @param mixed $value
+	 * @return void
+	 */
+	protected final function assign($key, $value) {
+		$key = (string) $key;
+		$key = trim($key);
 
-    if (!$key)
-      return;
+		if (!$key)
+			return;
 
-    $this->_tplvars[$key] = $value;
-  }
+		$this->_tplvars[$key] = $value;
+	}
 
-  /**
-   * Fetch out put
-   *
-   * @access protected
-   * @param string $tpl
-   * @return void
-   * @output mixed
-   */
-  protected final function fetch($tpl = NULL) {
-    if (!$tpl)
-      $tpl = MODULE . '/' . ACTION . '/' . METHOD;
-    else {
-      $tmp = array_map('trim', explode('.', $tpl));
-      $count = count($tmp);
-      if ($count === 0)
-        $tpl = MODULE . '/' . ACTION . '/' . METHOD;
-      elseif ($count === 1)
-        $tpl = MODULE . '/' . ACTION . '/' . $tmp[0];
-      elseif ($count === 2)
-        $tpl = MODULE . '/' . $tmp[0] . '/' . $tmp[1];
-      else
-        $tpl = $tmp[0] . '/' . $tmp[1] . '/' . $tmp[2];
-    }
+	/**
+	 * Fetch out put
+	 *
+	 * @access protected
+	 * @param string $tpl
+	 * @return void
+	 * @output mixed
+	 */
+	protected final function fetch($tpl = NULL) {
+		if (!$tpl)
+			$tpl = MODULE . '/' . ACTION . '/' . METHOD;
+		else {
+			$tmp = array_map('trim', explode('.', $tpl));
+			$count = count($tmp);
+			if ($count === 0)
+				$tpl = MODULE . '/' . ACTION . '/' . METHOD;
+			elseif ($count === 1)
+				$tpl = MODULE . '/' . ACTION . '/' . $tmp[0];
+			elseif ($count === 2)
+				$tpl = MODULE . '/' . $tmp[0] . '/' . $tmp[1];
+			else
+				$tpl = $tmp[0] . '/' . $tmp[1] . '/' . $tmp[2];
+		}
 
-    extract($this->_tplvars);
-    require 'templates/' . $tpl . '.php';
-  }
+		extract($this->_tplvars);
+		require 'templates/' . $tpl . '.php';
+	}
 
-  /**
-   * Display out put
-   *
-   * @access protected
-   * @param string $tpl
-   * @return void
-   * @output mixed
-   */
-  protected final function display($tpl = NULL) {
-    die($this->fetch($tpl));
-  }
+	/**
+	 * Display out put
+	 *
+	 * @access protected
+	 * @param string $tpl
+	 * @return void
+	 * @output mixed
+	 */
+	protected final function display($tpl = NULL) {
+		die($this->fetch($tpl));
+	}
 
 }

@@ -30,7 +30,7 @@ require SYS_ROOT . 'function.func.php';
  * Configure
  */
 if (!file_exists('lib/config.inc.php'))
-  (require SYS_ROOT . 'local/builder.class.php') && builder::app();
+	(require SYS_ROOT . 'local/builder.class.php') && builder::app();
 
 $config = (array) require 'lib/config.inc.php';
 
@@ -46,17 +46,17 @@ define('METHOD', $method);
 unset($module, $action, $method);
 
 isset($config['modules']) && (in_array(MODULE, $config['modules']) ||
-        isset($config['modules'][MODULE])) || die('Access denied !');
+	isset($config['modules'][MODULE])) || die('Access denied !');
 
 // auth request
 if (!empty($config['modules'][MODULE]['username']) &&
-        !empty($config['modules'][MODULE]['passwd']) && (
-        empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) ||
-        $config['modules'][MODULE]['username'] != $_SERVER['PHP_AUTH_USER'] ||
-        $config['modules'][MODULE]['passwd'] != $_SERVER['PHP_AUTH_PW']
-        )
+	!empty($config['modules'][MODULE]['passwd']) && (
+	empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) ||
+	$config['modules'][MODULE]['username'] != $_SERVER['PHP_AUTH_USER'] ||
+	$config['modules'][MODULE]['passwd'] != $_SERVER['PHP_AUTH_PW']
+	)
 )
-  httpAuth();
+	httpAuth();
 
 // require core class
 require SYS_ROOT . 'action.class.php';
