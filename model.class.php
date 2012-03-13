@@ -91,7 +91,7 @@ class model {
 	 * Get list
 	 *
 	 * @access public
-	 * @param mixed $condition, array('field1'=>'value1', 'field2'=>'~~%value2%', 'field3'=>'ISNULL', 'field4'=>'SETNULL'),
+	 * @param mixed $condition
 	 * @param mixed $limit
 	 * @param string $order
 	 * @return array
@@ -105,11 +105,26 @@ class model {
 				if (isset($this->_maps[$k])) {
 					$data[$this->_maps[$k]] = $c;
 					if (0 === strpos($c, '~~')) {
+						// ~~%,2,% => LIKE %,2,%
 						$where[] = '@__' . $this->_maps[$k] . ' LIKE ":' . $this->_maps[$k] . '"';
 						$data[$this->_maps[$k]] = substr($c, 2);
-					} elseif (0 === strcasecmp($c, 'ISNULL'))
+					} elseif (0 === strpos($c, '@>')) {
+						// @>4 => >4, @>=4 => >=4
+						$where[] = '@__' . $this->_maps[$k] . ' > ":' . $this->_maps[$k] . '"';
+						$data[$this->_maps[$k]] = substr($c, 2);
+					} elseif (0 === strpos($c, '@<')) {
+						// @<3 => <3, @<=3 => <=3
+						$where[] = '@__' . $this->_maps[$k] . ' < ":' . $this->_maps[$k] . '"';
+						$data[$this->_maps[$k]] = substr($c, 2);
+					} elseif (0 === stripos($c, 'ISIN')) {
+						// ISIN1,2,3,4,5 => IN (1,2,3,4,5)
+						$where[] = '@__' . $this->_maps[$k] . ' IN (:' . $this->_maps[$k] . ')';
+						$data[$this->_maps[$k]] = substr($c, 4);
+					}  elseif (0 === strcasecmp($c, 'ISNULL'))
+						// ISNULL => IS NULL
 						$where[] = '@__' . $this->_maps[$k] . ' IS :' . $this->_maps[$k];
 					elseif (0 === strcasecmp($c, 'SETNULL'))
+						// SETNULL => = NULL
 						$where[] = '@__' . $this->_maps[$k] . '=:' . $this->_maps[$k];
 					else
 					  $where[] = '@__' . $this->_maps[$k] . '=":' . $this->_maps[$k] . '"';
