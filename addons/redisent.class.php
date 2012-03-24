@@ -6,7 +6,6 @@
  * @copyright 2009 Justin Poliey <jdp34@njit.edu>
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  * @package Redisent
- * @Modified by Andrew li on 12-2-28 下午4:56
  */
 
 /**
@@ -65,24 +64,31 @@ class Redis {
 	}
 
 	function __call($name, $args) {
-
 		/* Build the Redis unified protocol command */
 		array_unshift($args, strtoupper($name));
 		$result = NULL;
-		if (isset($args[2]) && is_array($args[2])) {
+		if (isset($args[1]) && is_array($args[1])) {
 			$sourceArgs = $args;
-			$result = array();
-			foreach ($sourceArgs[2] as $subArg) {
-				$args = array(
-					$sourceArgs[0],
-					$sourceArgs[1],
-					$subArg
-				);
-				$result[$subArg] = $this->_do($args);
+			$args[] = $sourceArgs[0];
+			foreach ($sourceArgs[1] as $subArg) {
+				$args[] = $subArg;
 			}
-		} else {
-			$result = $this->_do($args);
+		} elseif (isset($args[2]) && is_array($args[2])) {
+			$sourceArgs = $args;
+			$args[] = $sourceArgs[0];
+			$args[] = $sourceArgs[1];
+			if ($sourceArgs[1] == 'HMSET') {
+				foreach ($sourceArgs[2] as $subKey => $subArg) {
+					$args[] = $subKey;
+					$args[] = $subArg;
+				}
+			} else {
+				foreach ($sourceArgs[2] as $subArg) {
+					$args[] = $subArg;
+				}
+			}
 		}
+		$result = $this->_do($args);
 		return $result;
 	}
 
@@ -102,7 +108,6 @@ class Redis {
 
 	private function _do($args) {
 		$command = sprintf('*%d%s%s%s', count($args), $this->_crlf, implode(array_map(array($this, '_format'), $args), $this->_crlf), $this->_crlf);
-
 		/* Open a Redis connection and execute the command */
 		for ($written = 0; $written < strlen($command); $written += $fwrite) {
 			$fwrite = fwrite($this->__sock, substr($command, $written));
@@ -110,7 +115,6 @@ class Redis {
 				throw new Exception('Failed to write entire command to stream');
 			}
 		}
-
 		/* Parse the response based on the reply identifier */
 		$reply = trim(fgets($this->__sock, 512));
 		switch (substr($reply, 0, 1)) {
@@ -161,6 +165,13 @@ class Redis {
 						} while ($read < $size);
 						fread($this->__sock, 2); /* discard crlf */
 						$response[] = $block;
+					}
+				}
+				if (($count = count($response)) > 0 && $count % 2 === 0) {
+					$tmp = $response;
+					$response = array();
+					for ($i = 0; $i < $count; $i += 2) {
+						$response[$tmp[$i]] = $tmp[$i + 1];
 					}
 				}
 				break;
