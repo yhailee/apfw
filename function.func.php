@@ -92,7 +92,7 @@ function action($name = NULL, $constructArgs = array()) {
 }
 
 /**
- * Generate password
+ * Generate rand chars
  *
  * @param number $length
  * @param number $type
@@ -113,7 +113,7 @@ function action($name = NULL, $constructArgs = array()) {
  *               15: upper+lower+number+specialchar
  * @return string
  */
-function genPwd($length = 8, $type = 7) {
+function randChars($length = 8, $type = 7) {
 	$upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$lower = 'abcdefghijklmnopqrstuvwxyz';
 	$number = '0123456789';
@@ -199,6 +199,16 @@ function outputJSON($status, $msg = '', $data = array()) {
  */
 function makeDir($dir, $mode = 0755) {
 	return empty($dir) || is_dir($dir) || makeDir(dirname($dir), $mode) && mkdir($dir, $mode);
+}
+
+/**
+ * Remove dirs
+ *
+ * @param string $dir
+ * @return boolean
+ */
+function removeDir($dir) {
+	return is_file($dir) && @unlink($dir) || is_dir($dir) && FALSE !== array_map('removeDir', glob($dir . (substr($dir, -1) != '/' ? '/' : '') . '*')) && @rmdir($dir) || FALSE;
 }
 
 /**
