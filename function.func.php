@@ -169,11 +169,11 @@ function randChars($length = 8, $type = 7) {
 			$src = $upper . $lower . $number;
 	}
 	$count = strlen($src);
-	$password = '';
+	$string = '';
 	for ($i = 0; $i < $length; $i++)
-		$password .= $src{rand(0, $count - 1)};
+		$string .= $src{rand(0, $count - 1)};
 
-	return $password;
+	return $string;
 }
 
 /**
@@ -232,4 +232,21 @@ function cp($path, $dest, $mode = 0755) {
 		chmod($target, $mode);
 	}
 	return TRUE;
+}
+
+/**
+ * Get client ip
+ *
+ * @return string
+ */
+function getClientIp() {
+	if (getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown'))
+		$ip = getenv('HTTP_CLIENT_IP');
+	elseif (getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown'))
+		$ip = getenv('HTTP_X_FORWARDED_FOR');
+	elseif (getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown'))
+		$ip = getenv('REMOTE_ADDR');
+	elseif (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown'))
+		$ip = $_SERVER['REMOTE_ADDR'];
+	return preg_match("/[\d\.]{7,15}/", $ip) ? $ip : 'unknown';
 }
