@@ -4,9 +4,11 @@
  * Database access handler
  *
  * @author Andrew li<1024(at)w(dot)cn>
- * @since 16:19 02/20/2012, drop pdo methods
- * @todo fixed all return types
+ * @version 0.01a
+ * @since 16:19 2012/2/20
  */
+defined('SYS_ROOT') || die('Access denied');
+
 class db {
 
 	/**

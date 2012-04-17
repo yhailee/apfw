@@ -2,136 +2,153 @@
 
 /**
  * Form class
- * base on jquery
  *
+ * @author Andrew li<1024(at)w(dot)cn>
  * @version 0.01a
- * @author andrew(at)w(dot)cn
- * @since 07:25 2/22/2012
+ * @since 07:25 2012/2/22
  */
-defined('SYS_ROOT') || die('Access denied !');
+defined('SYS_ROOT') || die('Access denied');
 
 class form {
 
 	/**
-	 * Form parameters
+	 * Show form list
 	 *
-	 * @access private
+	 * @access public
+	 * @param integer $start
+	 * @param integer $offset
+	 * @param return html
 	 */
-	private $_id = NULL;
-	private $_action = NULL;
-	private $_elements = array();
-	private $_readyScript = NULL;
-	private $_submitScript = NULL;
-
-	/**
-	 * Element types
-	 *
-	 * @access private
-	 */
-	private $_elementTypes = array(
-		'text',
-		'button',
-		'submit',
-		'reset',
-		'textarea',
-		'select',
-		'radio',
-		'checkbox'
-	);
-
-	public function __construct($id = NULL) {
-		if (!empty($id))
-			$this->_id = $id;
+	public function showForms($keyword = '', $start = 0, $offset = 10) {
+		// parse params
+		$keyword = trim($keyword);
+		$start = max(0, (int) $start);
+		$offset = max(0, (int) $offset);
+		$total = $list = NULL;
+		// get list from database
+		$sql = "SELECT * FROM @__form ";
+		if ($keyword)
+			$sql .= " WHERE form_name LIKE '%:keyword%' ORDER BY sort DESC";
+		// get number
+		$total = db()->field(str_replace('*', 'COUNT(1) AS n', $sql), array('keyword' => $keyword));
+		if ($offset) {
+			$sql .= " LIMIT $start, $offset";
+			// generate page html
+			$url_tpl = '<a href="%d">%d</a>';
+			$page = page($url_tpl, $total, $offset, $start, 4);
+		}
+		$list = db()->rows($sql, array('keyword' => $keyword));
+		// compile with template
+		$html = '';
+		ob_start();
+		require SYS_ROOT . 'templates/form_list.php';
+		$html = ob_get_contents();
+		ob_end_clean();
+		// return html
+		return $html;
 	}
 
 	/**
-	 * Set id
-	 *
-	 * @author Andrew li
-	 * @since 07:23 2/22/2012
+	 * Show form
 	 *
 	 * @access public
-	 * @param string $id
-	 * @return void
+	 * @param string $form_id
+	 * @return html
 	 */
-	public function setId($id) {
-		$this->_id = $id;
+	public function showForm($form_id) {
+		// @todo get form detail from database
+		// @todo compile with template
+		// @todo return html
 	}
 
 	/**
-	 * set Action
-	 *
-	 * @author Andrew li
-	 * @since 07:28 2/22/2012
+	 * Create form page
 	 *
 	 * @access public
-	 * @param string $url
-	 * @return void
+	 * @return html
 	 */
-	public function setAction($url) {
-		$this->_action = $url;
+	public function showCreateForm() {
+		// @todo get template
+		// @todo return html
 	}
 
 	/**
-	 * Add element
-	 *
-	 * @author Andrew li
-	 * @since 07:28 2/22/2012
+	 * Create form process
 	 *
 	 * @access public
-	 * @param string $url
-	 * @return void
+	 * @param array $form_data
+	 * @return boolean
 	 */
-	public function addElement($type, $name, $options) {
-		if (!in_array($type, $this->_elementTypes))
-			return FALSE;
-
-		$this->_elements[] = array(
-			'type' => $type,
-			'name' => $name,
-			'options' => $options
-		);
+	public function doCreateForm($form_data) {
+		// @todo save data to database
+		// @todo return boolean
 	}
 
 	/**
-	 * ready
-	 *
-	 * @author Andrew li
-	 * @since 07:40 2/22/2012
+	 * Update form page
 	 *
 	 * @access public
-	 * @param string $script
-	 * @return void
+	 * @param string $form_id
+	 * @return html
 	 */
-	public function setReadyScript($script = NULL) {
-		$this->_readyScript = $script;
+	public function showUpdateForm($form_id) {
+		// @todo get form data from database
+		// @todo get compile with template
+		// @todo return html
 	}
 
 	/**
-	 * Submit script
-	 *
-	 * @author Andrew li
-	 * @since 07:45 2/22/2012
+	 * Update form process
 	 *
 	 * @access public
-	 * @param string $script
-	 * @return void
+	 * @param string $form_id
+	 * @param array $form_data
+	 * @return boolean
 	 */
-	public function setSubmitScript($script = NULL) {
-		$this->_submitScript = $script;
+	public function doUpdateForm($form_id, $form_data) {
+		// @todo udpate database
+		// @todo return boolean
 	}
 
 	/**
-	 * Make form and return html code
+	 * Delete form process
 	 *
-	 * @author Andrew li
-	 * @since 07:47 2/22/2012
-	 * @TODO build html
 	 * @access public
-	 * @return string
+	 * @param string $form_id
+	 * @return boolean
 	 */
-	public function make() {
+	public function doDeleteForm($form_id) {
+		// @todo delete from database
+		// @todo return boolean
+	}
 
+	/**
+	 * Output
+	 *
+	 * @access public
+	 * @param string $form_name
+	 * @param array $form_data
+	 * @return html
+	 */
+	public function output($form_name, $form_data) {
+		// @todo get form data
+		// @todo get template
+		// @todo compile
+		// @todo return html
+	}
+
+	/**
+	 * Input
+	 *
+	 * @access public
+	 * @param string $form_name
+	 * @param array $form_data
+	 * @return array
+	 */
+	public function input($form_name, $form_data) {
+		// @todo get form data
+		// @todo filter data by form data
+		// @todo return data
 	}
 
 }

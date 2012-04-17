@@ -3,9 +3,12 @@
 /**
  * cURL RESTful client
  *
- * @auth Andrew li<1024(at)w(dot)cn>
- * @since 0:32 01/29/12
+ * @author Andrew li<1024(at)w(dot)cn>
+ * @version 0.01a
+ * @since 0:32 2012/1/29
  */
+defined('SYS_ROOT') || die('Access denied');
+
 class restclient {
 
 	public $response = array();

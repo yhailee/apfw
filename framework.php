@@ -3,10 +3,11 @@
 /**
  * Framework entrance
  *
- * @author Andrew li <1024(at)w(dot)cn>
- * @since 23:55 01/16/12
+ * @author Andrew li<1024(at)w(dot)cn>
+ * @version 0.01a
+ * @since 23:55 2012/4/17
  */
-defined('SYS_ROOT') || die('Access deined !');
+defined('SYS_ROOT') || die('Access deined');
 
 /**
  * Define APP_ROOT
@@ -34,16 +35,22 @@ if (!file_exists('lib/config.inc.php'))
 
 $config = (array) require 'lib/config.inc.php';
 
-define('SYSTEM', empty($config['system']) ? 'ANDREW Framework' : $config['system']);
+define('SYSTEM', empty($config['system']) ? 'A PHP Framework v0.01a' : $config['system']);
 
 require 'local/router.class.php';
-list($module, $action, $method) = router::parse();
+list($module, $action, $trick, $response) = router::parse();
 
 define('MODULE', $module);
 define('ACTION', $action);
-define('METHOD', $method);
+define('TRICK', $trick);
+define('RESPONSE', $response);
 
-unset($module, $action, $method);
+unset($module, $action, $trick, $response);
+
+//@todo validate rest
+if (!empty($config['modules'][MODULE]['type']) && $config['modules'][MODULE]['type'] == 1) {
+
+}
 
 isset($config['modules']) && (in_array(MODULE, $config['modules']) ||
 	isset($config['modules'][MODULE])) || die('Access denied !');

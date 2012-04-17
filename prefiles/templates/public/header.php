@@ -5,5 +5,6 @@
     <title><?php echo $title?></title>
     <meta name="keywords" content="<?php echo $keywords?>" />
     <meta name="description" content="<?php echo $description?>" />
+    <meta name="author" content="Andrew li<1024(at)w(dot)cn" />
   </head>
   <body>

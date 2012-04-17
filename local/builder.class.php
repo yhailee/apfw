@@ -3,10 +3,12 @@
 /**
  * Builder
  *
+ * @author Andrew li<1024(at)w(dot)cn>
  * @version 0.01a
- * @author andrew(at)w(dot)cn
- * @since 10:32 2/25/2012
+ * @since 10:32 2012/2/25
  */
+defined('SYS_ROOT') || die('Access denied');
+
 class builder {
 
 	/**

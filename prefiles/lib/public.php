@@ -2,8 +2,8 @@
 /**
  * public scripts
  *
- * @author andrew(at)w(dot)cn
+ * @author Andrew li<1024(at)w(dot)cn>
  * @since __DATE__
  */
 
-defined('SYS_ROOT') || die('Access deined !');
+defined('SYS_ROOT') || die('Access deined');

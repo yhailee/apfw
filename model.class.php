@@ -3,11 +3,11 @@
 /**
  * Core model
  *
- * @author andrew(at)w(dot)cn
- * @since 0:40 01/17/12
- * @TODO testing every method
+ * @author Andrew li<andrew(at)w(dot)cn>
+ * @version 0.01a
+ * @since 0:40 2012/1/17
  */
-defined('SYS_ROOT') || die('Access denied !');
+defined('SYS_ROOT') || die('Access denied');
 
 /**
  * Model format
@@ -46,14 +46,6 @@ class model {
 	private $_maps = array();
 
 	/**
-	 * DB object
-	 *
-	 * @var object
-	 * @access private
-	 */
-	private static $db = NULL;
-
-	/**
 	 * Construct
 	 *
 	 * @access public
@@ -75,11 +67,6 @@ class model {
 			foreach ($options as $k => $v)
 				if (isset($this->{'_' . $k}))
 					$this->{'_' . $k} = $v;
-
-		if (NULL === self::$db) {
-			require_once SYS_ROOT . 'local/db.class.php';
-			self::$db = new db($GLOBALS['config']['database']);
-		}
 	}
 
 	/**
@@ -197,7 +184,7 @@ class model {
 
 		// build query
 		$query = 'SELECT @__' . $this->_model . '.' . $this->_maps['id'] . ' FROM ' . implode(',', $tables) . $where . $order . $limit;
-		return self::$db->rows($query, $data);
+		return db()->rows($query, $data);
 	}
 
 	/**
@@ -230,7 +217,7 @@ class model {
 			$data[$k] = $v;
 		}
 		$query = 'INSERT INTO @__' . $this->_model . ' SET ' . implode(',', $query);
-		$id = self::$db->insert($query, $data);
+		$id = db()->insert($query, $data);
 
 		if (!$id)
 			return FALSE;
@@ -245,7 +232,7 @@ class model {
 				$data[$k] = $v;
 			}
 			$query = 'INSERT INTO @__' . $t . ' SET ' . implode(',', $query);
-			self::$db->insert($query, $data);
+			db()->insert($query, $data);
 		}
 		return $id;
 	}
@@ -299,7 +286,7 @@ class model {
 		$tables = array_unique($tables);
 		$where = array_unique($where);
 		$query = 'SELECT ' . implode(',', $fields) . ' FROM ' . implode(',', $tables) . ' WHERE ' . implode(' AND ', $where);
-		return $isSingle ? self::$db->field($query, $data) : self::$db->row($query, $data);
+		return $isSingle ? db()->field($query, $data) : db()->row($query, $data);
 	}
 
 	/**
@@ -337,7 +324,7 @@ class model {
 		foreach ($tables as $table) {
 			$data[$table]['id'] = $id;
 			$query = 'UPDATE ' . $table . ' SET ' . implode(',', $fields[$table]) . ' WHERE ' . $table . '.' . $this->_maps['id'] . '=":id"';
-			self::$db->execute($query, $data[$table]);
+			db()->execute($query, $data[$table]);
 		}
 
 		return TRUE;
@@ -366,7 +353,7 @@ class model {
 		}
 
 		foreach ($tables as $t)
-			self::$db->execute('DELETE FROM @__' . $t . ' WHERE ' . $where);
+			db()->execute('DELETE FROM @__' . $t . ' WHERE ' . $where);
 
 		return TRUE;
 	}

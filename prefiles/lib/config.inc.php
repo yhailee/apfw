@@ -3,14 +3,15 @@
 /**
  * Configure
  *
- * @author andrew(at)w(dot)cn
+ * @author Andrew li<1024(at)w(dot)cn>
  * @since __DATE__
  */
-defined('SYS_ROOT') || die('Access denied !');
+defined('SYS_ROOT') || die('Access denied');
 
 return array(
 	'modules' => array(
 		'index' => array(
+			'type' => 0, // 0-normal, 1-rest
 			'username' => '',
 			'passwd' => ''
 		)
@@ -54,36 +55,5 @@ return array(
 	 * @todo switch type (text/password/textarea/editor/button) except (action/enctype)
 	 */
 	'form' => array(
-		'backend_login' => array(
-			'action' => '',
-			'user_name' => array(
-				'type' => 'input-text',
-				'width' => 300,
-				'validation' => array(
-					'rule' => '',
-					'msg' => ''
-				)
-			),
-			'user_password' => array(
-				'type' => 'input-password',
-				'width' => 300,
-				'validation' => array(
-					'rule' => '',
-					'msg' => ''
-				)
-			),
-			'captcha' => array(
-				'type' => 'input-captcha',
-				'width' => 200,
-				'validation' => array(
-					'rule' => '',
-					'msg' => ''
-				)
-			),
-			'submit' => array(
-				'type' => 'button-submit',
-				'value' => '提交'
-			)
-		)
 	)
 );

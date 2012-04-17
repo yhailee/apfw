@@ -3,10 +3,73 @@
 /**
  * Core functions
  *
- * @author andrew(at)w(dot)cn
- * @since 0:40 01/17/12
+ * @author Andrew li<1024(at)w(dot)cn>
+ * @version 0.01a
+ * @since 0:40 2012/1/17
  */
-defined('SYS_ROOT') || die('Access denied !');
+defined('SYS_ROOT') || die('Access denied');
+
+/**
+ * Initialize database handle
+ *
+ * @return object
+ */
+function db() {
+	static $db = NULL;
+	if (NULL === $db && (class_exists(__FUNCTION__) || require SYS_ROOT . 'local/db.class.php'))
+		$db = new db($GLOBALS['config']['database']);
+	return $db;
+}
+
+/**
+ * Initialize restful client
+ *
+ * @return object
+ */
+function restclient() {
+	static $restclient = NULL;
+	if (NULL === $restclient && (class_exists(__FUNCTION__) || require SYS_ROOT . 'local/restclient.class.php'))
+		$restclient = new restclient;
+	return $restclient;
+}
+
+/**
+ * Generate page html
+ *
+ * @param string $url_tpl, <a href="/page/%d.html">%d</a>
+ * @param integer $total
+ * @param integer $offset
+ * @param integer $start
+ * @param integer $around
+ * @return string
+ */
+function page($url_tpl, $total, $offset, $start = 0, $around = 4) {
+	$url_tpl = trim($url_tpl);
+	$total = max(0, (int) $total);
+	$offset = max(0, (int) $offset);
+	$start = max(0, (int) $start);
+	$around = max(4, (int) $around);
+	if (!$total || !$offset) {
+		return '';
+	}
+	$cur_page = ceil(($start + 1) / $offset);
+	$total_page = ceil($total / $offset);
+	$min_page = 1;
+	$max_page = $total_page;
+	if ($cur_page > $min_page)
+		$min_page = max(1, $cur_page - $around);
+	if ($cur_page < $total_page)
+		$max_page = min($total_page, $cur_page + $around);
+	$html = '';
+	for ($i = $min_page; $i <= $max_page; $i++)
+		$html .= sprintf($url_tpl, $i, $i);
+	// add first/last page
+	if ($min_page != $cur_page)
+		$html = sprintf($url_tpl, 1, '<<') . $html;
+	if ($max_page != $cur_page)
+		$html .= sprintf($cur_page, $total_page, '>>');
+	return $html;
+}
 
 /**
  * Change object to array
@@ -19,11 +82,11 @@ function obj2arr($object) {
 	}
 
 	$object = (array) $object;
-
+	$arr = array();
 	foreach ($object as $key => $value)
-		$object[$key] = obj2arr($value);
+		$arr[$key] = obj2arr($value);
 
-	return $object;
+	return $arr;
 }
 
 /**
@@ -78,7 +141,7 @@ function action($name = NULL, $constructArgs = array()) {
 
 	$path = 'modules/' . str_replace('.', '/', $name) . 'Action.class.php';
 
-	if (file_exists($path) && is_readable($path)) {
+	if (file_exists($path)) {
 		require $path;
 		$name = substr($name, strpos($name, '.') + 1);
 		$action = $name . 'Action';
