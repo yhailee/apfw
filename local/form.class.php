@@ -56,9 +56,21 @@ class form {
 	 * @return html
 	 */
 	public function showForm($form_id) {
-		// @todo get form detail from database
-		// @todo compile with template
-		// @todo return html
+		// parse form id
+		$form_id = (int)$form_id;
+		if ($form_id < 1)
+			return '';
+		// get form detail from database
+		$sql = "SELECT * FROM @__form_element WHERE form_id = :form_id ORDER BY sort, elm_id";
+		$form_elements = db()->row($sql, array('form_id'=>$form_id));
+		// compile with template
+		$html = '';
+		ob_start();
+		require SYS_ROOT. 'templates/form_detail.php';
+		$html = ob_get_contents();
+		ob_end_clean();
+		// return html
+		return $html;
 	}
 
 	/**
@@ -68,8 +80,12 @@ class form {
 	 * @return html
 	 */
 	public function showCreateForm() {
-		// @todo get template
-		// @todo return html
+		$html = '';
+		ob_start();
+		require SYS_ROOT. 'templates/form_detail.php';
+		$html = ob_get_clean();
+		ob_end_clean();
+		return $html;
 	}
 
 	/**

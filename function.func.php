@@ -16,8 +16,10 @@ defined('SYS_ROOT') || die('Access denied');
  */
 function db() {
 	static $db = NULL;
-	if (NULL === $db && (class_exists(__FUNCTION__) || require SYS_ROOT . 'local/db.class.php'))
+	if (NULL === $db) {
+		class_exists(__FUNCTION__) || require SYS_ROOT . 'local/db.class.php';
 		$db = new db($GLOBALS['config']['database']);
+	}
 	return $db;
 }
 
@@ -31,6 +33,18 @@ function restclient() {
 	if (NULL === $restclient && (class_exists(__FUNCTION__) || require SYS_ROOT . 'local/restclient.class.php'))
 		$restclient = new restclient;
 	return $restclient;
+}
+
+/**
+ * Initialize form object
+ *
+ * @return object
+ */
+function form() {
+	static $form = NULL;
+	if (NULL === $form && (class_exists(__FUNCTION__) || require SYS_ROOT . 'local/form.class.php'))
+		$form = new form;
+	return $form;
 }
 
 /**
@@ -60,15 +74,23 @@ function page($url_tpl, $total, $offset, $start = 0, $around = 4) {
 		$min_page = max(1, $cur_page - $around);
 	if ($cur_page < $total_page)
 		$max_page = min($total_page, $cur_page + $around);
-	$html = '';
+	$pages = '';
+	// generate pages
 	for ($i = $min_page; $i <= $max_page; $i++)
-		$html .= sprintf($url_tpl, $i, $i);
+		if ($i != $cur_page)
+			$pages .= sprintf($url_tpl, $i, $i);
+		else
+			$pages .= '<strong>' . $i . '</strong>';
 	// add first/last page
 	if ($min_page != $cur_page)
-		$html = sprintf($url_tpl, 1, '<<') . $html;
+		$pages = sprintf($url_tpl, 1, '<<') . $pages;
 	if ($max_page != $cur_page)
-		$html .= sprintf($cur_page, $total_page, '>>');
-	return $html;
+		$pages .= sprintf($cur_page, $total_page, '>>');
+	// compile with template
+	static $page_tpl = NULL;
+	if (NULL === $page_tpl)
+		$page_tpl = require SYS_ROOT . 'templates/page.php';
+	return sprintf($page_tpl, $total_page, $pages);
 }
 
 /**
@@ -250,7 +272,7 @@ function randChars($length = 8, $type = 7) {
  */
 function outputJSON($status, $msg = '', $data = array()) {
 	header('Content-type:application/json; charset=utf-8');
-	echo json_encode(array('status' => $status, 'msg' => $msg, 'data' => $data));
+	die(json_encode(array('status' => $status, 'msg' => $msg, 'data' => $data)));
 }
 
 /**

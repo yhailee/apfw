@@ -182,7 +182,6 @@ class db {
 	 */
 	public function insert($query, $data = array()) {
 		$this->execute($query, $data);
-
 		return mysql_insert_id($this->_{$this->_currentConnect});
 	}
 
@@ -209,6 +208,7 @@ class db {
 				case 'DROP':
 				case 'ALTER':
 				case 'CREATE':
+				case 'RENAME':
 					$this->_currentConnect = 'master';
 					break;
 				default:
@@ -217,7 +217,6 @@ class db {
 
 		if (!$this->_connect())
 			return FALSE;
-
 		$this->_executeResult = mysql_query($this->_parseQuery($query, $data), $this->_{$this->_currentConnect});
 		return $this->_executeResult ? TRUE : FALSE;
 	}
@@ -268,7 +267,6 @@ class db {
 				if (empty($config))
 					return FALSE;
 		}
-
 		if (empty($config['host']) || empty($config['user']) || empty($config['pwd']) || empty($config['db']))
 			return FALSE;
 
@@ -308,7 +306,9 @@ class db {
 		foreach ($values as $k => $v)
 			$values[$k] = mysql_real_escape_string($v);
 
-		return str_replace($keys, $values, $query);
+		$query = str_replace($keys, $values, $query);
+		$this->logs[] = $query;
+		return $query;
 	}
 
 	/**

@@ -81,7 +81,11 @@ class action {
 				$tpl = $tmp[0] . '/' . $tmp[1] . '/' . $tmp[2];
 		}
 		extract($this->_tplvars);
+		ob_start();
 		require 'templates/' . $tpl . '.php';
+		$content = ob_get_contents();
+		ob_end_clean();
+		return $content;
 	}
 
 	/**
