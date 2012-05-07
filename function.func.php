@@ -335,3 +335,19 @@ function getClientIp() {
 		$ip = $_SERVER['REMOTE_ADDR'];
 	return preg_match("/[\d\.]{7,15}/", $ip) ? $ip : 'unknown';
 }
+
+/**
+ * write log
+ *
+ * @param mixed $output
+ * @param boolean $refresh
+ * @param return void
+ */
+function writeLog($output, $refresh = FALSE) {
+	$output = is_null($output) ? 'Null' : (empty($output) ? 'Empty' : print_r($output, TRUE));
+	$output = date('Y-m-d H:i') . "\n$output\n------------------------------\n";
+	if ($refresh)
+		file_put_contents('runtime/log.txt', $output);
+	else
+		file_put_contents('runtime/log.txt', $output, FILE_APPEND);
+}
