@@ -16,6 +16,12 @@ class action {
 	protected $_requestMethod = '';
 	protected $_responseType = '';
 
+	public function __construct() {
+		$this->_config = $GLOBALS['config'];
+		$mimes = require SYS_ROOT . 'mime.inc.php';
+		header('Content-type:' . $mimes[$_SERVER['REQUEST_METHOD']] . '; charset=utf-8');
+	}
+
 	/**
 	 * __call
 	 *
@@ -36,9 +42,6 @@ class action {
 	 * @return void
 	 */
 	public function run() {
-		$this->_config = $GLOBALS['config'];
-		$mimes = require SYS_ROOT . 'mime.inc.php';
-		header('Content-type:' . $mimes[$_SERVER['REQUEST_METHOD']] . '; charset=utf-8');
 		call_user_func(array($this, (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') === 0 ? 'do' : 'show') . TRICK));
 	}
 

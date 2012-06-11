@@ -9,4 +9,7 @@
 defined('SYS_ROOT') || die('Access deined');
 
 class publicAction extends action {
+	public function publicAction() {
+		parent::__construct();
+	}
 }

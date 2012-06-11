@@ -218,6 +218,9 @@ class db {
 		if (!$this->_connect())
 			return FALSE;
 		$this->_executeResult = mysql_query($this->_parseQuery($query, $data), $this->_{$this->_currentConnect});
+		if (mysql_errno($this->_{$this->_currentConnect})) {
+			$this->logs[] = mysql_error($this->_{$this->_currentConnect});
+		}
 		return $this->_executeResult ? TRUE : FALSE;
 	}
 

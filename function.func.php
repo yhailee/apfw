@@ -248,8 +248,15 @@ function randChars($length = 8, $type = 7) {
 			$src = $lower . $number . $specialchar;
 			break;
 		case 15:
-			$src = $upper . $lower . $number;
+			$src = $upper . $lower . $number . $specialchar;
 			break;
+		case 16:
+			if (!function_exists('uuid_create'))
+				return 'Please install php5-uuid extension';
+			uuid_create(&$context);
+			uuid_make($context, UUID_MAKE_V4);
+			uuid_export($context, UUID_FMT_STR, &$uuid);
+			return $uuid;
 		default:
 			$src = $upper . $lower . $number;
 	}
@@ -337,16 +344,46 @@ function getClientIp() {
 }
 
 /**
+ * Check ip range
+ *
+ * @param string $ip
+ * @param array $ipRange, e.g. array('127.0.0.1-127.0.254.254', '192.168.1.17')
+ * @return boolean
+ */
+function checkIpRange($ip, $ipRange) {
+	if (empty($ip)) {
+		return FALSE;
+	}
+	$ipLong = 0;
+	foreach ($ipRange as $ipAddr) {
+		$ipAddr = str_replace(' ', '', $ipAddr);
+		if (strpos($ipAddr, '-') && strpos($ipAddr, '-') == strrpos($ipAddr, '-')) {
+			list($ipAddr1, $ipAddr2) = explode('-', $ipAddr);
+			$ipAddr1 = ip2long($ipAddr1);
+			$ipAddr2 = ip2long($ipAddr2);
+			if ($ipLong === 0) {
+				$ipLong = ip2long($ipLong);
+			}
+			if ($ipAddr1 <= $ipLong && $ipLong <= $ipAddr2) {
+				return TRUE;
+			}
+		} elseif ($ip == $ipAddr) {
+			return TRUE;
+		}
+	}
+}
+
+/**
  * write log
  *
  * @param mixed $output
- * @param boolean $refresh
+ * @param boolean $flush before write
  * @param return void
  */
-function writeLog($output, $refresh = FALSE) {
+function writeLog($output, $flush = FALSE) {
 	$output = is_null($output) ? 'Null' : (empty($output) ? 'Empty' : print_r($output, TRUE));
 	$output = date('Y-m-d H:i') . "\n$output\n------------------------------\n";
-	if ($refresh)
+	if ($flush)
 		file_put_contents('runtime/log.txt', $output);
 	else
 		file_put_contents('runtime/log.txt', $output, FILE_APPEND);

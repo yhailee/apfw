@@ -12,6 +12,11 @@ defined('SYS_ROOT') || die('Access denied');
 class router {
 
 	public static function parse() {
+		// whitelist
+		isset($GLOBALS['config']['whitelist']) && is_array($GLOBALS['config']['whitelist']) && count($GLOBALS['config']['whitelist']) > 0 && !checkIpRange(getClientIp(), $GLOBALS['config']['whitelist']) && die('Ip not allowed!');
+		// blacklist
+		isset($GLOBALS['config']['blacklist']) && is_array($GLOBALS['config']['blacklist']) && checkIpRange(getClientIp(), $GLOBALS['config']['blacklist']) && die('Ip banned!');
+
 		$module = empty($_GET['module']) || !preg_match('/^[a-z]([a-z0-9_])*[a-z0-9]$/i', $_GET['module']) ? 'index' : $_GET['module'];
 		$action = empty($_GET['action']) || !preg_match('/^[a-z]([a-z0-9_])*[a-z0-9]$/i', $_GET['action']) ? 'index' : $_GET['action'];
 		$trick = empty($_GET['trick']) || !preg_match('/^[a-z]([a-z0-9_])*[a-z0-9]$/i', $_GET['trick']) ? 'index' : $_GET['trick'];
