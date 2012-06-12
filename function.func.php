@@ -388,3 +388,14 @@ function writeLog($output, $flush = FALSE) {
 	else
 		file_put_contents('runtime/log.txt', $output, FILE_APPEND);
 }
+
+/**
+ * Get ticket
+ *
+ * @desc require ticket table
+ * @return integer
+ */
+function getTicket() {
+	$salt = randChars(3, 4);
+	return db()->insert('REPLACE INTO @__ticket SET salt = :salt, stub = :stub', array('salt' => $salt, 'stub' => 1)) . $salt;
+}
