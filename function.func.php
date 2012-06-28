@@ -129,15 +129,12 @@ function httpAuth() {
  */
 function model($name = NULL) {
 	static $models = array();
-
 	if (!$name)
 		$name = MODULE;
-
-	$name = trim($name);
-
+	else
+		$name = trim($name);
 	if (isset($models[$name]))
 		return $models[$name];
-
 	return ($models[$name] = new model($name));
 }
 
@@ -149,30 +146,22 @@ function model($name = NULL) {
  */
 function action($name = NULL, $constructArgs = array()) {
 	static $actions = array();
-
 	if (!$name)
 		$name = MODULE . '.' . ACTION;
-
 	$name = trim($name);
-
+	if (isset($actions[$name]) && is_object($actions[$name])) //@TODO bugs
+		return $actions[$name];
 	if (FALSE === strpos($name, '.'))
 		$name = MODULE . '.' . $name;
-
-	if (isset($actions[$name]))
-		return $actions[$name];
-
 	$path = 'modules/' . str_replace('.', '/', $name) . 'Action.class.php';
-
 	if (file_exists($path)) {
-		require $path;
+		require_once $path;
 		$name = substr($name, strpos($name, '.') + 1);
 		$action = $name . 'Action';
 		if (class_exists($action))
 			$actions[$name] = new $action($constructArgs);
 	}
-
-	isset($actions[$name]) || die('Invalid action !');
-
+	isset($actions[$name]) && is_object($actions[$name]) || die('Invalid action[' . $name . ']!');
 	return $actions[$name];
 }
 

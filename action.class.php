@@ -18,8 +18,8 @@ class action {
 
 	public function __construct() {
 		$this->_config = $GLOBALS['config'];
-		$mimes = require SYS_ROOT . 'mime.inc.php';
-		header('Content-type:' . $mimes[$_SERVER['REQUEST_METHOD']] . '; charset=utf-8');
+		//$mimes = require SYS_ROOT . 'mime.inc.php';
+		//header('Content-type:' . $mimes[$_SERVER['REQUEST_METHOD']] . '; charset=utf-8');
 	}
 
 	/**
