@@ -1,0 +1,1517 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class DOMDocumentWrapper</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class DOMDocumentWrapper</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">DOMDocumentWrapper class simplifies work with DOMDocument.</p>
+<p class="description"><p>Know bug: <ul><li>in XHTML fragments, <br /> changes to <br /></li></ul></p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Tobiasz Cudnik &lt;<a href="mailto:tobiasz.cudnik/gmail.com">tobiasz.cudnik/gmail.com</a>&gt;</li>
+				<li><span class="field">todo:</span> check XML catalogs compatibility</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_addons---phpQuery-onefile.php.html">/addons/phpQuery-onefile.php</a> (line <span class="field">140</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																																																																																																																																								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$charset" title="details" class="var-name">$charset</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">unknown_type</span>
+					<a href="#$contentType" title="details" class="var-name">$contentType</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$data" title="details" class="var-name">$data</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$dataNodes" title="details" class="var-name">$dataNodes</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">DOMDocument</span>
+					<a href="#$document" title="details" class="var-name">$document</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$events" title="details" class="var-name">$events</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$eventsGlobal" title="details" class="var-name">$eventsGlobal</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$eventsNodes" title="details" class="var-name">$eventsNodes</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">unknown_type</span>
+					<a href="#$frames" title="details" class="var-name">$frames</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$id" title="details" class="var-name">$id</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$isDocumentFragment" title="details" class="var-name">$isDocumentFragment</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$isHTML" title="details" class="var-name">$isHTML</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$isXHTML" title="details" class="var-name">$isXHTML</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$isXML" title="details" class="var-name">$isXML</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">DOMNode</span>
+					<a href="#$root" title="details" class="var-name">$root</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$uuid" title="details" class="var-name">$uuid</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$xpath" title="details" class="var-name">$xpath</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																				<div class="method-definition">
+					static 						<span class="method-result">void</span>
+										<a href="#debug" title="details" class="method-name">debug</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$text</span>)
+									</div>
+																																								<div class="method-definition">
+					static 						<span class="method-result">unknown_type</span>
+										<a href="#expandEmptyTag" title="details" class="method-name">expandEmptyTag</a>
+											(<span class="var-type">$tag</span>&nbsp;<span class="var-name">$tag</span>, <span class="var-type">$xml</span>&nbsp;<span class="var-name">$xml</span>)
+									</div>
+																																<div class="method-definition">
+					static 						<span class="method-result">void</span>
+										<a href="#isDocumentFragmentHTML" title="details" class="method-name">isDocumentFragmentHTML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result">void</span>
+										<a href="#isDocumentFragmentXHTML" title="details" class="method-name">isDocumentFragmentXHTML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result">void</span>
+										<a href="#isDocumentFragmentXML" title="details" class="method-name">isDocumentFragmentXML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+																																																																																<div class="method-definition">
+					static 						<span class="method-result">void</span>
+										<a href="#markupFixXHTML" title="details" class="method-name">markupFixXHTML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+								
+												<div class="method-definition">
+											<span class="method-result">DOMDocumentWrapper</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$contentType</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$newDocumentID</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#afterMarkupLoad" title="details" class="method-name">afterMarkupLoad</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#charsetAppendToHTML" title="details" class="method-name">charsetAppendToHTML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$html</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$charset</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$xhtml</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#charsetAppendToXML" title="details" class="method-name">charsetAppendToXML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$charset</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#charsetFixHTML" title="details" class="method-name">charsetFixHTML</a>
+											(<span class="var-type">$html</span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#charsetFromHTML" title="details" class="method-name">charsetFromHTML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#charsetFromXML" title="details" class="method-name">charsetFromXML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#contentTypeFromHTML" title="details" class="method-name">contentTypeFromHTML</a>
+											(<span class="var-type">$markup</span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#contentTypeToArray" title="details" class="method-name">contentTypeToArray</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$contentType</span>)
+									</div>
+																								<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#documentCreate" title="details" class="method-name">documentCreate</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$charset</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$version</span> = <span class="var-default">'1.0'</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../phpQuery/DOMDocumentWrapper.html">DOMDocumentWrapper</a></span>
+										<a href="#documentFragmentCreate" title="details" class="method-name">documentFragmentCreate</a>
+											(<span class="var-type">$source</span>&nbsp;<span class="var-name">$source</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$charset</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#documentFragmentToMarkup" title="details" class="method-name">documentFragmentToMarkup</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$fragment</span>)
+									</div>
+																								<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#import" title="details" class="method-name">import</a>
+											(<span class="var-type">$source</span>&nbsp;<span class="var-name">$source</span>, [<span class="var-type">$target</span>&nbsp;<span class="var-name">$sourceCharset</span> = <span class="var-default">null</span>], <span class="var-type">$sourceCharset</span>&nbsp;<span class="var-name">2</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#importAttr" title="details" class="method-name">importAttr</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																																								<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#isXHTML" title="details" class="method-name">isXHTML</a>
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#isXML" title="details" class="method-name">isXML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#load" title="details" class="method-name">load</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$contentType</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$newDocumentID</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#loadMarkup" title="details" class="method-name">loadMarkup</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#loadMarkupHTML" title="details" class="method-name">loadMarkupHTML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$requestedCharset</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#loadMarkupReset" title="details" class="method-name">loadMarkupReset</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#loadMarkupXML" title="details" class="method-name">loadMarkupXML</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$requestedCharset</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#markup" title="details" class="method-name">markup</a>
+											([<span class="var-type">$nodes</span>&nbsp;<span class="var-name">$nodes</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$innerMarkup</span> = <span class="var-default">false</span>])
+									</div>
+																</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$charset" id="$charset"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$charset</span>
+						(line <span class="line-number">174</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$contentType" id="$contentType"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">unknown_type</span>
+			<span class="var-name">$contentType</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">150</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">todo:</span> Rewrite as method and quess if null.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$data" id="$data"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$data</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">153</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$dataNodes" id="$dataNodes"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$dataNodes</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">154</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$document" id="$document"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">DOMDocument</span>
+			<span class="var-name">$document</span>
+						(line <span class="line-number">144</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$events" id="$events"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$events</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">155</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$eventsGlobal" id="$eventsGlobal"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$eventsGlobal</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">157</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$eventsNodes" id="$eventsNodes"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$eventsNodes</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">156</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$frames" id="$frames"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">unknown_type</span>
+			<span class="var-name">$frames</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">162</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">TODO:</span> iframes support http://code.google.com/p/phpquery/issues/detail?id=28</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$id" id="$id"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$id</span>
+						(line <span class="line-number">145</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$isDocumentFragment" id="$isDocumentFragment"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$isDocumentFragment</span>
+						(line <span class="line-number">170</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$isHTML" id="$isHTML"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$isHTML</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">173</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$isXHTML" id="$isXHTML"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$isXHTML</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">172</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$isXML" id="$isXML"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$isXML</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">171</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$root" id="$root"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">DOMNode</span>
+			<span class="var-name">$root</span>
+						(line <span class="line-number">169</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Document root, by default equals to document itself.</p>
+<p class="description"><p>Used by documentFragments.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$uuid" id="$uuid"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$uuid</span>
+			 = <span class="var-default"> 0</span>			(line <span class="line-number">152</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$xpath" id="$xpath"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$xpath</span>
+						(line <span class="line-number">151</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methoddebug" id="debug"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method debug</span> (line <span class="line-number">778</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">void</span>
+		<span class="method-name">
+			debug
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$text</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$text</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodexpandEmptyTag" id="expandEmptyTag"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method expandEmptyTag</span> (line <span class="line-number">790</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">expandEmptyTag</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> mjaque at ilkebenson dot com</li>
+				<li><span class="field">link:</span> <a href="http://php.net/manual/en/domdocument.savehtml.php#81256">http://php.net/manual/en/domdocument.savehtml.php#81256</a></li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">unknown_type</span>
+		<span class="method-name">
+			expandEmptyTag
+		</span>
+					(<span class="var-type">$tag</span>&nbsp;<span class="var-name">$tag</span>, <span class="var-type">$xml</span>&nbsp;<span class="var-name">$xml</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$tag</span>
+				<span class="var-name">$tag</span>			</li>
+					<li>
+				<span class="var-type">$xml</span>
+				<span class="var-name">$xml</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodisDocumentFragmentHTML" id="isDocumentFragmentHTML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method isDocumentFragmentHTML</span> (line <span class="line-number">538</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isDocumentFragmentHTML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodisDocumentFragmentXHTML" id="isDocumentFragmentXHTML"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method isDocumentFragmentXHTML</span> (line <span class="line-number">544</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isDocumentFragmentXHTML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodisDocumentFragmentXML" id="isDocumentFragmentXML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method isDocumentFragmentXML</span> (line <span class="line-number">541</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isDocumentFragmentXML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmarkupFixXHTML" id="markupFixXHTML"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method markupFixXHTML</span> (line <span class="line-number">772</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">void</span>
+		<span class="method-name">
+			markupFixXHTML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">175</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">DOMDocumentWrapper</span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$contentType</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$newDocumentID</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$contentType</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$newDocumentID</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodafterMarkupLoad" id="afterMarkupLoad"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">afterMarkupLoad</span> (line <span class="line-number">204</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			afterMarkupLoad
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodcharsetAppendToHTML" id="charsetAppendToHTML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">charsetAppendToHTML</span> (line <span class="line-number">509</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			charsetAppendToHTML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$html</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$charset</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$xhtml</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$html</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$charset</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$xhtml</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcharsetAppendToXML" id="charsetAppendToXML"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">charsetAppendToXML</span> (line <span class="line-number">534</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			charsetAppendToXML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$charset</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$charset</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcharsetFixHTML" id="charsetFixHTML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">charsetFixHTML</span> (line <span class="line-number">493</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Repositions meta[type=charset] at the start of head. Bypasses DOMDocument bug.</p>
+	<ul class="tags">
+				<li><span class="field">link:</span> <a href="http://code.google.com/p/phpquery/issues/detail?id=80">http://code.google.com/p/phpquery/issues/detail?id=80</a></li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			charsetFixHTML
+		</span>
+					(<span class="var-type">$html</span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$html</span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcharsetFromHTML" id="charsetFromHTML"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">charsetFromHTML</span> (line <span class="line-number">473</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			charsetFromHTML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcharsetFromXML" id="charsetFromXML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">charsetFromXML</span> (line <span class="line-number">477</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			charsetFromXML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcontentTypeFromHTML" id="contentTypeFromHTML"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">contentTypeFromHTML</span> (line <span class="line-number">459</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> contentType, charset</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			contentTypeFromHTML
+		</span>
+					(<span class="var-type">$markup</span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$markup</span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcontentTypeToArray" id="contentTypeToArray"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">contentTypeToArray</span> (line <span class="line-number">442</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			contentTypeToArray
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$contentType</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$contentType</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddocumentCreate" id="documentCreate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">documentCreate</span> (line <span class="line-number">252</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			documentCreate
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$charset</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$version</span> = <span class="var-default">'1.0'</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$charset</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$version</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddocumentFragmentCreate" id="documentFragmentCreate"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">documentFragmentCreate</span> (line <span class="line-number">607</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates new document fragment.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../phpQuery/DOMDocumentWrapper.html">DOMDocumentWrapper</a></span>
+		<span class="method-name">
+			documentFragmentCreate
+		</span>
+					(<span class="var-type">$source</span>&nbsp;<span class="var-name">$source</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$charset</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$source</span>
+				<span class="var-name">$source</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$charset</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddocumentFragmentToMarkup" id="documentFragmentToMarkup"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">documentFragmentToMarkup</span> (line <span class="line-number">677</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			documentFragmentToMarkup
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$fragment</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$fragment</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodimport" id="import"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">import</span> (line <span class="line-number">557</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> Array of imported nodes.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			import
+		</span>
+					(<span class="var-type">$source</span>&nbsp;<span class="var-name">$source</span>, [<span class="var-type">$target</span>&nbsp;<span class="var-name">$sourceCharset</span> = <span class="var-default">null</span>], <span class="var-type">$sourceCharset</span>&nbsp;<span class="var-name">2</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$sourceCharset</span>
+				<span class="var-name">2</span>			</li>
+					<li>
+				<span class="var-type">$source</span>
+				<span class="var-name">$source</span>			</li>
+					<li>
+				<span class="var-type">$target</span>
+				<span class="var-name">$sourceCharset</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodimportAttr" id="importAttr"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">importAttr</span> (line <span class="line-number">547</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			importAttr
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodisXHTML" id="isXHTML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">isXHTML</span> (line <span class="line-number">427</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isXHTML
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodisXML" id="isXML"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">isXML</span> (line <span class="line-number">438</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isXML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodload" id="load"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">load</span> (line <span class="line-number">182</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			load
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$contentType</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$newDocumentID</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$contentType</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$newDocumentID</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodloadMarkup" id="loadMarkup"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">loadMarkup</span> (line <span class="line-number">209</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			loadMarkup
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodloadMarkupHTML" id="loadMarkupHTML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">loadMarkupHTML</span> (line <span class="line-number">261</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			loadMarkupHTML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$requestedCharset</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$requestedCharset</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodloadMarkupReset" id="loadMarkupReset"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">loadMarkupReset</span> (line <span class="line-number">249</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			loadMarkupReset
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodloadMarkupXML" id="loadMarkupXML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">loadMarkupXML</span> (line <span class="line-number">335</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			loadMarkupXML
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$markup</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$requestedCharset</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$markup</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$requestedCharset</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmarkup" id="markup"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">markup</span> (line <span class="line-number">704</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return document markup, starting with optional $nodes as root.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			markup
+		</span>
+					([<span class="var-type">$nodes</span>&nbsp;<span class="var-name">$nodes</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$innerMarkup</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$nodes</span>
+				<span class="var-name">$nodes</span><span class="var-description">: DOMNode|DOMNodeList</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$innerMarkup</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 29 Jun 2012 11:59:14 +0800 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</div></body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title></title>
+			<link rel="stylesheet" href="media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+						<h1 align="center">README</h1>
+<pre>
+Generate project Usage:
+
+[The first way]
+1. Modify bin/genProject.sh change '#!/usr/bin/php' to your php program path
+2. execute `bin/genProject.sh PROJECT-PATH`, be sure the PROJECT-PATH is writable and bin/genProject.sh is executable first
+
+[The second way]
+1. Create PROJECT-PATH/index.php, and put the below script in it
+   &lt;?php
+   define('SYS_ROOT', realpath('FRAMEWORK-PATH') . '/');
+   require SYS_ROOT . 'framework.php';
+   ?&gt;
+2. Replace FRAMEWORK-PATH to this package path
+</pre>
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 29 Jun 2012 11:59:13 +0800 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</body>
+</html>
