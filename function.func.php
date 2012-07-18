@@ -239,13 +239,13 @@ function randChars($length = 8, $type = 7) {
 		case 15:
 			$src = $upper . $lower . $number . $specialchar;
 			break;
-		case 16:
-			if (!function_exists('uuid_create'))
-				return 'Please install php5-uuid extension';
-			uuid_create(&$context);
-			uuid_make($context, UUID_MAKE_V4);
-			uuid_export($context, UUID_FMT_STR, &$uuid);
-			return $uuid;
+		/* case 16:
+		  if (!function_exists('uuid_create'))
+		  return 'Please install php5-uuid extension';
+		  uuid_create(&$context);
+		  uuid_make($context, UUID_MAKE_V4);
+		  uuid_export($context, UUID_FMT_STR, &$uuid);
+		  return $uuid; */
 		default:
 			$src = $upper . $lower . $number;
 	}
@@ -387,4 +387,69 @@ function writeLog($output, $flush = FALSE) {
 function getTicket() {
 	$salt = randChars(3, 4);
 	return db()->insert('REPLACE INTO @__ticket SET salt = :salt, stub = :stub', array('salt' => $salt, 'stub' => 1)) . $salt;
+}
+
+/**
+ * Curl post compact 5.1.6
+ *
+ * @param string $url
+ * @param array $contents
+ * @param array $files
+ * @return mixed
+ */
+function curlPost($url, $contents = array(), $files = array()) {
+	if (empty($url) || FALSE === stripos('http://') && FALSE === stripos('https://')) {
+		return FALSE;
+	}
+// form field separator
+	$delimiter = '-------------' . uniqid();
+// file upload fields: name => array(type=>'mime/type',content=>'raw data')
+	$fileFields = array();
+	foreach ($files as $name => $file) {
+		$fileFields[$name] = array(
+			'name' => substr($file, strrpos($file, '/') + 1),
+			'type' => mime_content_type($file),
+			'content' => file_get_contents($file)
+		);
+	}
+// all other fields (not file upload): name => value
+	$postFields = $contents;
+
+	$data = '';
+
+// populate normal fields first (simpler)
+	foreach ($postFields as $name => $content) {
+		$data .= "--" . $delimiter . PHP_EOL;
+		$data .= 'Content-Disposition: form-data; name="' . $name . '"';
+		// note: double endline
+		$data .= PHP_EOL . PHP_EOL;
+		$data .= $content . PHP_EOL;
+	}
+// populate file fields
+	foreach ($fileFields as $name => $file) {
+		$data .= "--" . $delimiter . PHP_EOL;
+		// "filename" attribute is not essential; server-side scripts may use it
+		$data .= 'Content-Disposition: form-data; name="' . $name . '"; filename="' . $file['name'] . '"' . PHP_EOL;
+		// this is, again, informative only; good practice to include though
+		$data .= 'Content-Type: ' . $file['type'] . PHP_EOL;
+		// this endline must be here to indicate end of headers
+		$data .= PHP_EOL;
+		// the file itself (note: there's no encoding of any kind)
+		$data .= $file['content'] . PHP_EOL;
+	}
+// last delimiter
+	$data .= "--" . $delimiter . "--" . PHP_EOL;
+
+	$handle = curl_init($url);
+	curl_setopt($handle, CURLOPT_POST, TRUE);
+	curl_setopt($handle, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($handle, CURLOPT_HTTPHEADER, array(
+		'Content-Type: multipart/form-data; boundary=' . $delimiter,
+		'Content-Length: ' . strlen($data)
+	));
+	curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+	$result = curl_exec($handle);
+	curl_close($handle);
+	unset($data);
+	return $result;
 }

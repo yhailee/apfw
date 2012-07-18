@@ -69,7 +69,7 @@ class restclient {
 		curl_setopt($this->_curl, CURLOPT_URL, $this->url);
 
 		// validate url
-		if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
+		if (function_exists('filter_var') && !filter_var($this->url, FILTER_VALIDATE_URL)) {
 			$this->response = 'INVALID URL';
 			curl_close($this->_curl);
 			return FALSE;
