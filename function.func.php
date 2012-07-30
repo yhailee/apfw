@@ -397,7 +397,7 @@ function getTicket() {
  * @param array $files
  * @return mixed
  */
-function curlPost($url, $contents = array(), $files = array()) {
+function curlPost($url, $contents = array(), $files = array(), $writeLog = FALSE) {
 	if (empty($url) || FALSE === stripos('http://') && FALSE === stripos('https://')) {
 		return FALSE;
 	}
@@ -449,7 +449,23 @@ function curlPost($url, $contents = array(), $files = array()) {
 	));
 	curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
 	$result = curl_exec($handle);
+	if ($writeLog) {
+		writeLog(print_r(curl_getinfo($handle), TRUE));
+		writeLog($result);
+	}
 	curl_close($handle);
 	unset($data);
 	return $result;
+}
+
+/**
+ * Get ext of file
+ *
+ * @param string $file_name
+ * @return string
+ */
+function getExt($file) {
+	if (!$file || !($file = trim($file)) || !strpos($file, '.'))
+		return '';
+	return strtolower(substr($file, strrpos($file, '.') + 1));
 }

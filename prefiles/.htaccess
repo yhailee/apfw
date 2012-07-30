@@ -32,7 +32,7 @@ ErrorDocument 401 'Ooops, <font color=red>401</font>'
 ErrorDocument 402 'Ooops, <font color=red>402</font>'
 ErrorDocument 403 'Ooops, <font color=red>403</font>'
 ErrorDocument 404 'Ooops, <font color=red>404</font>'
-ErrorDocument 500 'Ooops, Error !'
+ErrorDocument 500 'Ooops, <font color=red>Error</font>'
 
 <Limit GET POST PUT DELETE>
 Order Deny,Allow

@@ -51,9 +51,4 @@ return array(
 	),
 	'redis' => array(
 	),
-	/**
-	 * @todo switch type (text/password/textarea/editor/button) except (action/enctype)
-	 */
-	'form' => array(
-	)
 );
