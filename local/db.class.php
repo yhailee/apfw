@@ -225,6 +225,16 @@ class db {
 	}
 
 	/**
+	 * Clear logs
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function clearLogs() {
+		$this->logs = array();
+	}
+
+	/**
 	 * Connect
 	 *
 	 * @access private

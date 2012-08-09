@@ -14,13 +14,13 @@ defined('SYS_ROOT') || die('Access denied');
  *
  * @return object
  */
-function db() {
-	static $db = NULL;
-	if (NULL === $db) {
+function db($dbhandle = 'default') {
+	static $db = array();
+	if (!isset($db[$dbhandle])) {
 		class_exists(__FUNCTION__) || require SYS_ROOT . 'local/db.class.php';
-		$db = new db($GLOBALS['config']['database']);
+		$db[$dbhandle] = new db($GLOBALS['config'][$dbhandle == 'default' ? 'database' : $dbhandle]);
 	}
-	return $db;
+	return $db[$dbhandle];
 }
 
 /**
@@ -398,7 +398,7 @@ function getTicket() {
  * @return mixed
  */
 function curlPost($url, $contents = array(), $files = array(), $writeLog = FALSE) {
-	if (empty($url) || FALSE === stripos('http://') && FALSE === stripos('https://')) {
+	if (empty($url) || FALSE === stripos($url, 'http://') && FALSE === stripos($url, 'https://')) {
 		return FALSE;
 	}
 // form field separator
