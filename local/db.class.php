@@ -306,12 +306,14 @@ class db {
 	 * @return string
 	 */
 	private function _parseQuery($query, $data) {
-		$arr = array_keys($data);
 		$keys = array();
-		foreach ($arr as $a)
-			$keys[] = ':' . $a;
-
-		$values = array_values($data);
+		$values = array();
+		if (is_array($data)) {
+			$arr = array_keys($data);
+			foreach ($arr as $a)
+				$keys[] = ':' . $a;
+			$values = array_values($data);
+		}
 
 		$keys[] = '@__';
 		$values[] = $this->_prefix;
