@@ -342,7 +342,7 @@ class PHPMailer {
   public function __construct($exceptions = false) {
     $this->exceptions = ($exceptions == true);
     //@Add by Andrew li for reset path on 16:11 07/09/12
-    $this->PluginDir = __DIR__.DIRECTORY_SEPARATOR. 'PHPMailer_v5.1'. DIRECTORY_SEPARATOR;
+    $this->PluginDir = dirname(__FILE__).DIRECTORY_SEPARATOR. 'PHPMailer_v5.1'. DIRECTORY_SEPARATOR;
   }
 
   /**
