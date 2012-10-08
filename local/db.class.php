@@ -196,8 +196,10 @@ class db {
 	public function execute($query, $data = array()) {
 		$query = trim($query);
 
-		if (empty($query))
+		if (empty($query)) {
+			$this->_log('Empty query');
 			return FALSE;
+		}
 
 		if ($this->separate)
 			switch ($this->_action = strtoupper(substr($query, 0, strpos($query, ' ')))) {
@@ -219,7 +221,7 @@ class db {
 			return FALSE;
 		$this->_executeResult = mysql_query($this->_parseQuery($query, $data), $this->_{$this->_currentConnect});
 		if (mysql_errno($this->_{$this->_currentConnect})) {
-			$this->logs[] = mysql_error($this->_{$this->_currentConnect});
+			$this->_log(mysql_error($this->_{$this->_currentConnect}));
 		}
 		return $this->_executeResult ? TRUE : FALSE;
 	}
@@ -246,49 +248,65 @@ class db {
 				if (is_resource($this->_master))
 					return TRUE;
 
-				if (count($this->masters) < 1)
+				if (count($this->masters) < 1) {
+					$this->_log('No master configures');
 					return FALSE;
+				}
 
 				$config = $this->masters[array_rand($this->masters)];
 
-				if (empty($config))
+				if (empty($config)) {
+					$this->_log('No configures');
 					return FALSE;
+				}
 
 				break;
 			case 'slave':
 				if (is_resource($this->_slave))
 					return TRUE;
 
-				if (count($this->slaves) < 1)
+				if (count($this->slaves) < 1) {
+					$this->_log('No slave configures');
 					return FALSE;
+				}
 
 				$config = $this->slaves[array_rand($this->slaves)];
 
-				if (empty($config))
+				if (empty($config)) {
+					$this->_log('No configures');
 					return FALSE;
+				}
 
 				break;
 			default:
 				if (is_resource($this->_default))
 					return TRUE;
 
-				if (count($this->default) < 1)
+				if (count($this->default) < 1) {
+					$this->_log('No default configures');
 					return FALSE;
+				}
 
 				$config = $this->default[array_rand($this->default)];
 
-				if (empty($config))
+				if (empty($config)) {
+					$this->_log('No configures');
 					return FALSE;
+				}
 		}
-		if (empty($config['host']) || empty($config['user']) || empty($config['pwd']) || empty($config['db']))
+		if (empty($config['host']) || empty($config['user']) || empty($config['pwd']) || empty($config['db'])) {
+			$this->_log('No configures');
 			return FALSE;
+		}
 
 		if (empty($config['charset']))
 			$config['charset'] = 'utf8';
 
 		$this->_{$this->_currentConnect} = mysql_connect($config['host'], $config['user'], $config['pwd']);
-		if (!is_resource($this->_{$this->_currentConnect}))
+		if (!is_resource($this->_{$this->_currentConnect})) {
+			$this->_log('Connect failed');
 			return FALSE;
+		}
 		mysql_select_db($config['db'], $this->_{$this->_currentConnect});
 		mysql_query('SET NAMES ' . $config['charset']);
 
