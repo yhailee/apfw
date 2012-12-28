@@ -14,6 +14,7 @@ class restclient {
 	public $response = array();
 	public $httpcode = 0;
 	public $httperror = NULL;
+  public $logs = array();
 	public $url = NULL;
 	public $agent = 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.2 (KHTML, like Gecko) Ubuntu/11.10 Chromium/15.0.874.106 Chrome/15.0.874.106 Safari/535.2';
 	public $params = array();
@@ -171,5 +172,9 @@ class restclient {
 			}
 		}
 	}
+
+  private function _log($msg) {
+    $this->logs[] = $msg;
+  }
 
 }

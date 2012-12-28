@@ -14,7 +14,7 @@ class indexAction extends publicAction {
 		$this->assign('title', 'Welcome');
 		$this->assign('keywords', 'Welcome page');
 		$this->assign('description', 'Welcome page, test content');
-		$this->assign('content', 'Thanks for using Andrew Framework, this is a test content !');
+		$this->assign('content', 'Thanks for using A PHP Framework, this is a test content !');
 		$this->display('index');
 	}
 

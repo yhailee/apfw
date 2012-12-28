@@ -385,8 +385,8 @@ function writeLog($output, $flush = FALSE) {
  * @return integer
  */
 function getTicket() {
-	$salt = randChars(3, 4);
-	return db()->insert('REPLACE INTO @__ticket SET salt = :salt, stub = :stub', array('salt' => $salt, 'stub' => 1)) . $salt;
+	$salt = strval(randChars(3, 4));
+	return strval(db()->insert('REPLACE INTO @__ticket SET salt = :salt, stub = :stub', array('salt' => $salt, 'stub' => 1))) . $salt;
 }
 
 /**
@@ -500,18 +500,39 @@ function getPageParams($requestData) {
  * @todo complete
  */
 function minify($html) {
-	return $html;
+	//return $html;
 	//require_once SYS_ROOT . 'addons/Minify_HTML.class.php';
 	//$html = Minify_HTML::minify($html);
 	$search = array(
 			'/\>[^\S ]+/s', //strip whitespaces after tags, except space
 			'/[^\S ]+\</s', //strip whitespaces before tags, except space
-			'/(\s)+/s'	// shorten multiple whitespace sequences
+			'/(\s)+/s',	// shorten multiple whitespace sequences
+			'/<!\-\-.*?\-\->/is',
+			'/\/>\s+</'
 	);
 	$replace = array(
 			'>',
 			'<',
-			'\\1'
+			'\\1',
+			'',
+			'/><'
 	);
 	return preg_replace($search, $replace, $html);
+}
+
+/**
+ * Import redis
+ * 
+ * @use for compact
+ */
+function redis() {
+	static $redis;
+	if (is_a($redis, 'Redis')) {
+		return $redis;
+	}	
+	if (!class_exists('Redis')) {
+		require SYS_ROOT. 'addons/redisent.class.php';
+	}
+	$redis = new Redis();
+	return $redis;
 }
