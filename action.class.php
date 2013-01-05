@@ -88,6 +88,12 @@ class action {
 		require 'templates/' . $tpl . '.php';
 		$content = ob_get_contents();
 		ob_end_clean();
+		// code
+		if (FALSE !== ($codePos = stripos($content, '[code]')) && stripos($content, '[/code]')) {
+			$content = preg_replace_callback('/(.*?)\[code\](.*?)\[\/code\](.*)/is', $this->_code_replacer($matchs), $content);
+			$content = substr($content, 0, $codePos) . highlightStyle() . substr($content, $codePos);
+		}
+
 		return $content;
 	}
 
@@ -101,6 +107,17 @@ class action {
 	 */
 	protected final function display($tpl = NULL) {
 		die($this->fetch($tpl));
+	}
+
+	/**
+	 * Code replacer
+	 * 
+	 * @access private
+	 * @param array $matchs
+	 * @return string
+	 */
+	private function _code_replacer($matchs) {
+		return $matchs[1] . highlightString($matchs[2]) . $matchs[3];
 	}
 
 }

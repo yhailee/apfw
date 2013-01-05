@@ -135,7 +135,8 @@ function model($name = NULL) {
 		$name = trim($name);
 	if (isset($models[$name]))
 		return $models[$name];
-	return ($models[$name] = new model($name));
+	require 'modules/' . $name . 'Model.class.php';
+	return ($models[$name] = new $name . 'Model');
 }
 
 /**
@@ -506,7 +507,7 @@ function minify($html) {
 	$search = array(
 			'/\>[^\S ]+/s', //strip whitespaces after tags, except space
 			'/[^\S ]+\</s', //strip whitespaces before tags, except space
-			'/(\s)+/s',	// shorten multiple whitespace sequences
+			'/(\s)+/s', // shorten multiple whitespace sequences
 			'/<!\-\-.*?\-\->/is',
 			'/\/>\s+</'
 	);
@@ -529,10 +530,79 @@ function redis() {
 	static $redis;
 	if (is_a($redis, 'Redis')) {
 		return $redis;
-	}	
+	}
 	if (!class_exists('Redis')) {
-		require SYS_ROOT. 'addons/redisent.class.php';
+		require SYS_ROOT . 'addons/redisent.class.php';
 	}
 	$redis = new Redis();
 	return $redis;
+}
+
+/**
+ * Highlight string
+ * 
+ * @param string $string
+ * @param boolean $with_style
+ * @return string
+ */
+function highlightString($string, $with_style = FALSE) {
+	$t = token_get_all(trim($string));
+	$output = '<code><ol><li><span>';
+
+	foreach ($t as $s) {
+		if (is_array($s)) {
+			$token = strtolower(substr(token_name($s[0]), 2));
+			if ($token === "whitespace") {
+				$token = "";
+			}
+			$string = $s[1];
+		} else {
+			$token = "";
+			$string = $s;
+		}
+
+		$open = $close = "";
+		if ($token) {
+			$open = "<span class=\"" . $token . "\">";
+			$close = "</span>";
+		}
+
+		$string = str_replace(array("\r\n", "\r"), "\n", $string);
+		$string = htmlspecialchars($string);
+
+		$string = preg_replace(
+						"/(\\t+)/", "<span class=\"tab\">&nbsp;&nbsp;</span>", $string
+		);
+
+		$pizza = explode("\n", $string);
+
+		foreach ($pizza as $i => $piece) {
+			if ($i > 0) {
+				$output .= "<br /></span></li>\n<li><span>";
+			}
+			if (!empty($piece)) {
+				$output .= $open;
+			}
+			$output .= $piece;
+			if (!empty($piece)) {
+				$output .= $close;
+			}
+		}
+	}
+	$output .= '</span></li></ol></code>';
+	if ($with_style) {
+		$output = highlightStyle() . $output;
+	}
+	return $output;
+}
+
+/**
+ * Highlight style
+ * 
+ * @return string
+ */
+function highlightStyle() {
+	return <<<EOF
+<style type="text/css">code{background-color:#FFF;display:block;line-height:100%}code span.tab{font-size:8px}code span{white-space:pre;cursor:default}code ol{padding:0;list-style:none}code li{color:#ccc;font-size:12px;font-family:Verdana,monospace;padding:3px 0;padding-left:6px}code li:hover{background-color:ghostwhite}code li>span{color:#f0f;font-family:monospace}code li>span>span{color:#ccc}code span.inline_html{color:#369}code span.open_tag,code span.close_tag{color:red}code span.variable{color:#0ff}code span.string{color:#0a0}code span.constant_encapsed_string{color:#0f0}code span.comment{color:#808080}code span.file,code span.dir,code span.class_c{color:#8080ff}code span.is_equal,code span.is_greater_or_equal,code span.is_identical,code span.is_not_equal,code span.is_not_identical,code span.is_smaller_or_equal,code span.sl,code span.sl_equal,code span.sr,code span.sr_equal,code span.start_heredoc,code span.boolean_and,code span.boolean_or,code span.double_colon,code span.double_arrow{color:#f0f}code span.endfor,code span.endforeach,code span.endif,code span.endswitch,code span.endwhile,code span.break,code span.continue,code span.declare,code span.enddeclare,code span.do,code span.else,code span.elseif,code span.for,code span.as,code span.foreach,code span.goto,code span.if,code span.case,code span.default,code span.switch,code span.while,code span.function,code span.class,code span.extends,code span.new,code span.var,code span.catch,code span.throw,code span.try,code span.namespace,code span.use,code span.abstract,code span.clone,code span.const,code span.final,code span.implements,code span.interface,code span.private,code span.protected,code span.public,code span.and,code span.or,code span.xor,code span.instanceof,code span.global,code span.static,code span.array,code span.die,code span.echo,code span.empty,code span.exit,code span.eval,code span.include,code span.include_once,code span.isset,code span.list,code span.require,code span.require_once,code span.return,code span.print,code span.unset{color:orange}</style>
+EOF;
 }

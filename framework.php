@@ -67,7 +67,7 @@ if (!empty($config['modules'][MODULE]['username']) &&
 
 // require core class
 require SYS_ROOT . 'action.class.php';
-require SYS_ROOT . 'model.class.php';
+//require SYS_ROOT . 'model.class.php';
 
 // require function/public
 file_exists('lib/function.func.php') && require 'lib/function.func.php';
