@@ -3,7 +3,7 @@
 /**
  * Database access handler
  *
- * @author Andrew li<1024(at)w(dot)cn>
+ * @author Andrew Lee<tinray1024@gmail.com>
  * @version 0.01a
  * @since 16:19 2012/2/20
  */

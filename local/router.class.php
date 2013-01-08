@@ -3,7 +3,7 @@
 /**
  * Router
  *
- * @author andrew(at)w(dot)cn
+ * @author Andrew Lee<tinray1024@gmail.com>
  * @version 0.01a
  * @since 22:04 2012/2/26
  */

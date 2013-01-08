@@ -1,11 +1,12 @@
 <?php
 /**
  * @desc encrypt class
- * @author Andrew lee
+ * @author Andrew Lee<tinray1024@gmail.com>
  * @link 1024(at)w(dot)cn
  * @version 0.10
  * @since 16:07 3/18/2011
  */
+defined('SYS_ROOT') || die('Access denied');
 
 class encrypt {
 

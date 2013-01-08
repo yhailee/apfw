@@ -3,7 +3,7 @@
 /**
  * Core functions
  *
- * @author Andrew li<1024(at)w(dot)cn>
+ * @author Andrew Lee<tinray1024@gmail.com>
  * @version 0.01a
  * @since 0:40 2012/1/17
  */

@@ -3,7 +3,7 @@
 /**
  * App entrance
  *
- * @author Andrew li<1024(at)w(dot)cn>
+ * @author Andrew Lee<tinray1024@gmail.com>
  * @since __DATE__
  */
 

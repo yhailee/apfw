@@ -3,7 +3,7 @@
 /**
  * Form class
  *
- * @author Andrew li<1024(at)w(dot)cn>
+ * @author Andrew Lee<tinray1024@gmail.com>
  * @version 0.01a
  * @since 07:25 2012/2/22
  */

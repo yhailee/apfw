@@ -3,7 +3,7 @@
 /**
  * Framework mimes
  *
- * @author Andrew li<1024(at)w(dot)cn>
+ * @author Andrew Lee<tinray1024@gmail.com>
  * @version 0.01a
  * @since 12:52 2012/4/17
  */
