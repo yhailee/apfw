@@ -341,7 +341,7 @@ class PHPMailer {
    */
   public function __construct($exceptions = false) {
     $this->exceptions = ($exceptions == true);
-    //@Add by Andrew li for reset path on 16:11 07/09/12
+    //@Add by Andrew Lee for reset path on 16:11 07/09/12
     $this->PluginDir = dirname(__FILE__).DIRECTORY_SEPARATOR. 'PHPMailer_v5.1'. DIRECTORY_SEPARATOR;
   }
 
@@ -873,7 +873,7 @@ class PHPMailer {
     //Overwrite language-specific strings. This way we'll never have missing translations - no more "language string failed to load"!
     $l = true;
     if ($langcode != 'en') { //There is no English translation file
-      //@Modified for change language path by Andrew li on 16:15 07/09/12
+      //@Modified for change language path by Andrew Lee on 16:15 07/09/12
       $l = @include $this->PluginDir.$lang_path.'phpmailer.lang-'.$langcode.'.php';
     }
     $this->language = $PHPMAILER_LANG;

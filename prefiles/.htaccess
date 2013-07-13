@@ -2,9 +2,9 @@ AddDefaultCharset UTF-8
 DirectoryIndex index.html index.php
 Options All -Indexes
 
-#<FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf)$">
-#Header set Cache-Control "max-age=2592000"
-#</FilesMatch>
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf)(\?[0-9]+)?$">
+Header set Cache-Control "max-age=2592000"
+</FilesMatch>
 
 # compress text, html, javascript, css, xml:
 AddOutputFilterByType DEFLATE text/plain
@@ -45,4 +45,4 @@ RewriteEngine On
 RewriteBase /
 
 #Public statics
-RewriteRule ^static/public/(.*?)$ /studio/project/framework/static/$1 [NC,L]
+#RewriteRule 

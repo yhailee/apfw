@@ -2,7 +2,6 @@
 /**
  * @desc encrypt class
  * @author Andrew Lee<tinray1024@gmail.com>
- * @link 1024(at)w(dot)cn
  * @version 0.10
  * @since 16:07 3/18/2011
  */

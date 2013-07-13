@@ -14,7 +14,7 @@ class restclient {
 	public $response = array();
 	public $httpcode = 0;
 	public $httperror = NULL;
-  public $logs = array();
+	public $logs = array();
 	public $url = NULL;
 	public $agent = 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.2 (KHTML, like Gecko) Ubuntu/11.10 Chromium/15.0.874.106 Chrome/15.0.874.106 Safari/535.2';
 	public $params = array();
@@ -62,13 +62,6 @@ class restclient {
 	private function _exec() {
 		$this->_curl = curl_init();
 
-		if ($this->host && $this->ip) {
-			$this->url = str_replace(':host', $this->ip, $this->url);
-			curl_setopt($this->_curl, CURLOPT_HTTPHEADER, array('Host: ' . $this->host));
-		}
-
-		curl_setopt($this->_curl, CURLOPT_URL, $this->url);
-
 		// validate url
 		if (function_exists('filter_var') && !filter_var($this->url, FILTER_VALIDATE_URL)) {
 			$this->response = 'INVALID URL';
@@ -100,9 +93,14 @@ class restclient {
 			curl_setopt($this->_curl, CURLOPT_USERPWD, $this->username . ':' . $this->userpwd);
 		}
 
+		$arr = $this->params;
+		$this->params = array();
+		$this->_http_build_query_for_curl($arr, $this->params);
+
 		switch ($this->_method) {
 			case 'post':
 				curl_setopt($this->_curl, CURLOPT_POST, TRUE);
+				curl_setopt($this->_curl, CURLOPT_HTTPHEADER, array("Content-type: multipart/form-data"));
 				curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $this->params);
 				break;
 			case 'put':
@@ -117,6 +115,8 @@ class restclient {
 				curl_setopt($this->_curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
 				break;
 			default:
+				$this->params = http_build_query($this->params);
+				$this->url .= (strpos($this->url, '?') ? '' : '?') . (substr($this->url, -1) == '&' ? '' : '&') . $this->params;
 				curl_setopt($this->_curl, CURLOPT_HTTPGET, TRUE);
 				if ($this->_method == 'ping')
 					curl_setopt($this->_curl, CURLOPT_NOBODY, TRUE);
@@ -124,6 +124,13 @@ class restclient {
 
 		if ($this->_method != 'ping')
 			$this->_curlExecFollow();
+
+		if ($this->host && $this->ip) {
+			$this->url = str_replace(':host', $this->ip, $this->url);
+			curl_setopt($this->_curl, CURLOPT_HTTPHEADER, array('Host: ' . $this->host));
+		}
+
+		curl_setopt($this->_curl, CURLOPT_URL, $this->url);
 
 		$this->response = curl_exec($this->_curl);
 		$this->httpcode = curl_getinfo($this->_curl, CURLINFO_HTTP_CODE);
@@ -173,8 +180,23 @@ class restclient {
 		}
 	}
 
-  private function _log($msg) {
-    $this->logs[] = $msg;
-  }
+	private function _log($msg) {
+		$this->logs[] = $msg;
+	}
+
+	private function _http_build_query_for_curl($arrays, &$new = array(), $prefix = null) {
+		if (is_object($arrays)) {
+			$arrays = get_object_vars($arrays);
+		}
+
+		foreach ($arrays AS $key => $value) {
+			$k = isset($prefix) ? $prefix . '[' . $key . ']' : $key;
+			if (is_array($value) OR is_object($value)) {
+				$this->_http_build_query_for_curl($value, $new, $k);
+			} else {
+				$new[$k] = $value;
+			}
+		}
+	}
 
 }
